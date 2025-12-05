@@ -150,6 +150,7 @@ sudo nix run nix-darwin#darwin-uninstaller
 - [Setting up a development environment with Nix and Home Manager](https://www.rousette.org.uk/archives/setting-up-a-development-environment-with-nix-and-home-manager/)
 - [How I use Nix on macOS](https://blog.6nok.org/how-i-use-nix-on-macos/)
 - [mitchellh nix config on github](https://github.com/mitchellh/nixos-config/tree/main)
+- [Nixing Homebrew: Streamlining package management on your machine](https://dev.to/synecdokey/nix-on-macos-2oj3)
 
 ### Other
 
