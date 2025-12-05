@@ -11,7 +11,7 @@
     };
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, home-manager }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, home-manager, ... }:
   let
     configuration = { pkgs, ... }: {
       # List packages installed in system profile. To search by name, run:
@@ -26,6 +26,7 @@
           "asdf"
         ];
         casks = [
+          "ghostty"
           "orbstack"
           "keeper-password-manager"
           "zen"
