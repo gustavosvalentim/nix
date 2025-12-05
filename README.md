@@ -151,6 +151,8 @@ sudo nix run nix-darwin#darwin-uninstaller
 - [How I use Nix on macOS](https://blog.6nok.org/how-i-use-nix-on-macos/)
 - [mitchellh nix config on github](https://github.com/mitchellh/nixos-config/tree/main)
 - [Nixing Homebrew: Streamlining package management on your machine](https://dev.to/synecdokey/nix-on-macos-2oj3)
+- [Managing dotfiles with nix](https://seroperson.me/2024/01/16/managing-dotfiles-with-nix/)
+- [Home manager dotfiles management](https://gvolpe.com/blog/home-manager-dotfiles-management/)
 
 ### Other
 
