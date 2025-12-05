@@ -1,0 +1,2 @@
+# Ensure markdown files are treated as text
+*.md text
