@@ -19,7 +19,6 @@
       enableZshIntegration = true;
     };
 
-    # Create /etc/zshrc that loads the nix-darwin environment.
     zsh = {
       enable = true;
       oh-my-zsh = {
@@ -27,12 +26,27 @@
         plugins = [
           "git"
           "sudo"
+          "uv"
+          "virtualenv"
+          "pip"
+          "npm"
+          "node"
+          "macos"
         ];
-        theme = "robbyrussell";
+        theme = "kphoen";
       };
       shellAliases = {
-        switch = "sudo darwin-rebuild switch --flake $HOME/.config/nix";
         tree = "tree --gitignore";
+        switch = "sudo darwin-rebuild switch --flake $HOME/.config/nix";
+        nix-clear = "nix-collect-garbage -d";
+        nix-config = "$EDITOR $HOME/.config/nix";
+        vim-config = "$EDITOR $HOME/.config/nvim";
+        la = "ls -AF";
+        gs = "git status";
+        gc = "git commit";
+        gp = "git push";
+        gl = "git log";
+        gd = "git diff $(git rev-parse --abbrev-ref HEAD)";
       };
     };
 
@@ -86,6 +100,7 @@
     claude-code
     jq
     uv
+    zoxide
   ];
 
   home.activation.cloneNeovimConfig = lib.hm.dag.entryAfter [ "writeBoundary" "installPackages" "programs.git" ] ''
