@@ -1,19 +1,20 @@
-{ pkgs, lib, ... }:
-
-{
-
-  # this is internal compatibility configuration 
-  # for home-manager, don't change this!
-  home.stateVersion = "23.05";
-  # Let home-manager install and manage itself.
-  programs.home-manager.enable = true;
-
-  # Disabled for now since we mismatch our versions. See flake.nix for details.
-  home.enableNixpkgsReleaseCheck = false;
-
-  xdg.enable = true;
+{pkgs, ... }: {
+  darwinPackages = with pkgs; [
+    bat
+    ripgrep
+    tree
+    gopls
+    nodejs
+    claude-code
+    jq
+    uv
+    zoxide
+  ];
 
   programs = {
+    # Let home-manager install and manage itself.
+    home-manager.enable = true;
+
     fzf = {
       enable = true;
       enableZshIntegration = true;
@@ -37,10 +38,10 @@
       };
       shellAliases = {
         tree = "tree --gitignore";
-        switch = "sudo darwin-rebuild switch --flake $HOME/.config/nix";
-        nix-clear = "nix-collect-garbage -d";
-        nix-config = "$EDITOR $HOME/.config/nix";
-        vim-config = "$EDITOR $HOME/.config/nvim";
+        nixswitch = "sudo darwin-rebuild switch --flake $HOME/.config/nix";
+        nixclear = "nix-collect-garbage -d";
+        nixconfig = "$EDITOR $HOME/.config/nix";
+        vimconfig = "$EDITOR $HOME/.config/nvim";
         la = "ls -AF";
         gs = "git status";
         gc = "git commit";
@@ -85,30 +86,4 @@
       vimAlias = true;
     };
   };
-
-  home.sessionVariables = {
-    EDITOR = "nvim";
-    PATH   = "$\{ASDF_DATA_DIR:-$HOME/.asdf\}/shims:$PATH";
-  };
-
-  home.packages = with pkgs; [
-    bat
-    ripgrep
-    tree
-    gopls
-    nodejs
-    claude-code
-    jq
-    uv
-    zoxide
-  ];
-
-  home.activation.cloneNeovimConfig = lib.hm.dag.entryAfter [ "writeBoundary" "installPackages" "programs.git" ] ''
-    echo "Running post-rebuild script" >> /tmp/nix-darwin-activation.log
-    REPOSITORY="https://github.com/gustavosvalentim/nvim"
-    DIRECTORY="$HOME/.config/nvim"
-    if [ ! -d "$DIRECTORY" ]; then
-      ${pkgs.git}/bin/git clone "$REPOSITORY" "$DIRECTORY" 
-    fi
-  '';
 }
