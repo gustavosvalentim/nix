@@ -42,7 +42,7 @@
         nixclear = "nix-collect-garbage -d";
         nixconfig = "$EDITOR $HOME/.config/nix";
         vimconfig = "$EDITOR $HOME/.config/nvim";
-        la = "ls -AF";
+        la = "ls -laF";
         gs = "git status";
         gc = "git commit";
         gp = "git push";
