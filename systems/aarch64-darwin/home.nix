@@ -33,6 +33,13 @@
     source = ../../common/ghostty/config;
   };
 
+  # Workaround for muting ghostty when resizing split windows
+  # https://github.com/ghostty-org/ghostty/discussions/5521#discussioncomment-12306028
+  home.file."macos-default-keybinding" = {
+    target = "/Users/${username}/Library/KeyBindings/DefaultKeyBinding.dict";
+    source = ../../common/macos/DefaultKeyBinding.dict;
+  };
+
   programs =
     let packages = import ../../common/packages.nix { inherit pkgs; };
     in packages.programs;
