@@ -59,6 +59,7 @@
           email = "gustavosvalentim1@gmail.com";
           init.defaultBranch = "main";
           push.autoSetupRemote = true;
+          pull.rebase = true;
         };
       };
       ignores = [ ".DS_Store" ];
@@ -68,7 +69,7 @@
       enable = true;
       env = { 
         GOPATH = "Documents/go";
-        GOPRIVATE = [ "github.com/mitchellh" ];
+        GOPRIVATE = [ "github.com/gustavosvalentim" ];
       };
     };
 

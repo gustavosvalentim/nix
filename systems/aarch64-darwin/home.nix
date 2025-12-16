@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, username, ... }:
 
 {
   # this is internal compatibility configuration 
@@ -27,6 +27,11 @@
       ${pkgs.git}/bin/git clone "$REPOSITORY" "$DIRECTORY" 
     fi
   '';
+
+  home.file."ghostty-config" = {
+    target = "/Users/${username}/Library/Application\ Support/com.mitchellh.ghostty/config";
+    source = ../../common/ghostty/config;
+  };
 
   programs =
     let packages = import ../../common/packages.nix { inherit pkgs; };
