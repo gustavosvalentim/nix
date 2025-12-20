@@ -8,6 +8,7 @@
     brews = [
       "cowsay"
       "asdf"
+      "keeper-commander"
     ];
 
     casks = [
@@ -18,11 +19,11 @@
       "spotify"
       "vlc"
       "obsidian"
-      "opencode"
     ];
 
     onActivation = {
       autoUpdate = true;
+      upgrade = true;
       cleanup = "zap";
     };
   };

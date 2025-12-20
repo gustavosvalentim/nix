@@ -123,5 +123,26 @@
       defaultEditor = true;
       vimAlias = true;
     };
+
+    opencode = {
+      enable = true;
+      enableMcpIntegration = true;
+      settings = {
+        autoupdate = true;
+        mcp = {
+          sequential-thinking = {
+            enabled = true;
+            type = "local";
+            command = ["npx" "-y" "@modelcontextprotocol/server-sequential-thinking"];
+          };
+
+          mcp-docs = {
+            enabled = true;
+            type = "local";
+            command = ["npx" "-y" "mcp-remote" "https://gitmcp.io/docs"];
+          };
+        };
+      };
+    };
   };
 }

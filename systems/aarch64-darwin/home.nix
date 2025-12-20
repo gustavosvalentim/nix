@@ -13,6 +13,7 @@
   home.sessionVariables = {
     EDITOR = "nvim";
     PATH   = "$\{ASDF_DATA_DIR:-$HOME/.asdf\}/shims:$PATH";
+    OPENCODE_CONFIG = "$HOME/.config/opencode/config.json";
   };
 
   home.packages = let
