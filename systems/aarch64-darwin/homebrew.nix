@@ -18,6 +18,7 @@
       "spotify"
       "vlc"
       "obsidian"
+      "opencode"
     ];
 
     onActivation = {
