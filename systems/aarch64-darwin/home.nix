@@ -20,6 +20,8 @@
     packages = import ../../common/packages.nix { inherit pkgs; };
     in packages.darwinPackages;
 
+  fonts.fontconfig.enable = true;
+
   home.activation.cloneNeovimConfig = lib.hm.dag.entryAfter [ "writeBoundary" "installPackages" "programs.git" ] ''
     echo "Running post-rebuild script" >> /tmp/nix-darwin-activation.log
     REPOSITORY="https://github.com/gustavosvalentim/nvim"

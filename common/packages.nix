@@ -1,4 +1,4 @@
-{pkgs, ... }: 
+{ pkgs, ... }: 
 
 {
   darwinPackages = with pkgs; [
@@ -11,6 +11,13 @@
     jq
     uv
     zoxide
+
+    jetbrains-mono
+
+    nerd-fonts.fira-code
+    nerd-fonts.iosevka
+    nerd-fonts.jetbrains-mono
+
   ];
 
   programs = {
@@ -76,7 +83,7 @@
 
       shellAliases = {
         tree = "tree --gitignore";
-        nixswitch = "sudo darwin-rebuild switch --flake $HOME/.config/nix";
+        nixswitch = "sudo darwin-rebuild switch --flake $HOME/.config/nix --print-build-logs --show-trace -vvv";
         nixclear = "nix-collect-garbage -d";
         nixconfig = "$EDITOR $HOME/.config/nix";
         vimconfig = "$EDITOR $HOME/.config/nvim";
