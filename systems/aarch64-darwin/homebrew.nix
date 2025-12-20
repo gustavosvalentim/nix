@@ -19,6 +19,7 @@
       "spotify"
       "vlc"
       "obsidian"
+      "clipy"
     ];
 
     onActivation = {
