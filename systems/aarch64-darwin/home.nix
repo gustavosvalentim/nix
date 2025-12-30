@@ -17,7 +17,7 @@
   };
 
   home.packages = let
-    packages = import ../../common/packages.nix { inherit pkgs; };
+    packages = import ../../common/packages.nix { inherit pkgs username; };
     in packages.darwinPackages;
 
   fonts.fontconfig.enable = true;
@@ -43,8 +43,13 @@
     source = ../../common/macos/DefaultKeyBinding.dict;
   };
 
+  home.file."opencode-agent-md" = {
+    target = "/Users/${username}/.config/opencode/AGENTS.md";
+    source = ../../common/opencode/AGENTS.md;
+  };
+
   programs =
-    let packages = import ../../common/packages.nix { inherit pkgs; };
+    let packages = import ../../common/packages.nix { inherit pkgs username; };
     in packages.programs;
 }
 
