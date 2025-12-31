@@ -48,6 +48,11 @@
     source = ../../common/opencode/AGENTS.md;
   };
 
+  home.file."opencode-config" = {
+    target = "/Users/${username}/.config/opencode/config.json";
+    source = ../../common/opencode/config.json;
+  };
+
   programs =
     let packages = import ../../common/packages.nix { inherit pkgs username; };
     in packages.programs;

@@ -130,52 +130,5 @@
       defaultEditor = true;
       vimAlias = true;
     };
-
-    opencode = {
-      enable = true;
-      enableMcpIntegration = true;
-      settings = {
-        autoupdate = true;
-        mcp = {
-          sequential-thinking = {
-            enabled = true;
-            type = "local";
-            command = ["npx" "-y" "@modelcontextprotocol/server-sequential-thinking"];
-          };
-
-          filesystem = {
-            enabled = true;
-            type = "local";
-            command = [
-              "npx"
-              "-y"
-              "@modelcontextprotocol/server-filesystem"
-              "/Users/${username}/repos"
-            ];
-          };
-
-          context7 = {
-            enabled = true;
-            type = "local";
-            command = ["npx" "-y" "@upstash/context7-mcp"];
-          };
-
-          github = {
-            enabled = true;
-            type = "local";
-            command = ["npx" "-y" "@modelcontextprotocol/server-github"];
-            environment = {
-              GITHUB_PERSONAL_ACCESS_TOKEN = "$GITHUB_PAT";
-            };
-          };
-
-          docker = {
-            enabled = true;
-            type = "local";
-            command = ["uvx" "mcp-server-docker"];
-          };
-        };
-      };
-    };
   };
 }

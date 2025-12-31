@@ -1,6 +1,10 @@
 { ... }:
 
 {
+  imports = [
+    ./homebrew.nix
+  ];
+
   system.defaults = {
     dock = {
       autohide = true;

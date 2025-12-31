@@ -8,6 +8,7 @@
     brews = [
       "cowsay"
       "asdf"
+      "opencode"
       "keeper-commander"
     ];
 
