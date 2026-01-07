@@ -8,6 +8,7 @@
     brews = [
       "cowsay"
       "asdf"
+      "oven-sh/bun/bun"
       "opencode"
       "keeper-commander"
     ];

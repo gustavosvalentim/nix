@@ -43,15 +43,25 @@
     source = ../../common/macos/DefaultKeyBinding.dict;
   };
 
-  home.file."opencode-agent-md" = {
-    target = "/Users/${username}/.config/opencode/AGENTS.md";
-    source = ../../common/opencode/AGENTS.md;
-  };
+  # home.file."opencode-agent-md" = {
+  #   target = "/Users/${username}/.config/opencode/AGENTS.md";
+  #   source = ../../common/opencode/AGENTS.md;
+  # };
 
   home.file."opencode-config" = {
     target = "/Users/${username}/.config/opencode/config.json";
     source = ../../common/opencode/config.json;
   };
+
+  # Install oh-my-opencode
+  home.activation.installOhMyOpenCode = lib.hm.dag.entryAfter [ "writeBoundary" "installPackages" "programs.git" ] ''
+    export PATH="/opt/homebrew/bin:$PATH"
+    if command -v opencode >/dev/null 2>&1 && command -v bunx >/dev/null 2>&1; then
+      bunx oh-my-opencode install --no-tui --claude=yes --chatgpt=no --gemini=no
+    else
+      echo "opencode or bunx not found, skipping oh-my-opencode install"
+    fi
+  '';
 
   programs =
     let packages = import ../../common/packages.nix { inherit pkgs username; };
