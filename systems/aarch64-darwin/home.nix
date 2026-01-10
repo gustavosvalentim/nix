@@ -53,6 +53,16 @@
     source = ../../common/opencode/config.json;
   };
 
+  home.file."opencode-root-config" = {
+    target = "/Users/${username}/.config/opencode/opencode.json";
+    source = ../../common/opencode/opencode.json;
+  };
+
+  home.file."oh-my-opencode" = {
+    target = "/Users/${username}/.config/opencode/oh-my-opencode.json";
+    source = ../../common/opencode/oh-my-opencode.json;
+  };
+
   # Install oh-my-opencode
   home.activation.installOhMyOpenCode = lib.hm.dag.entryAfter [ "writeBoundary" "installPackages" "programs.git" ] ''
     export PATH="/opt/homebrew/bin:$PATH"
