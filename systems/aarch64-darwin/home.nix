@@ -13,7 +13,7 @@
   home.sessionVariables = {
     EDITOR = "nvim";
     PATH   = "$\{ASDF_DATA_DIR:-$HOME/.asdf\}/shims:$PATH";
-    OPENCODE_CONFIG = "$HOME/.config/opencode/config.json";
+    OPENCODE_CONFIG = "$HOME/.config/opencode/opencode.jsonc";
   };
 
   home.packages = let
@@ -49,16 +49,11 @@
   # };
 
   home.file."opencode-config" = {
-    target = "/Users/${username}/.config/opencode/config.json";
-    source = ../../common/opencode/config.json;
+    target = "/Users/${username}/.config/opencode/opencode.jsonc";
+    source = ../../common/opencode/opencode.jsonc;
   };
 
-  home.file."opencode-root-config" = {
-    target = "/Users/${username}/.config/opencode/opencode.json";
-    source = ../../common/opencode/opencode.json;
-  };
-
-  home.file."oh-my-opencode" = {
+  home.file."oh-my-opencode-config" = {
     target = "/Users/${username}/.config/opencode/oh-my-opencode.json";
     source = ../../common/opencode/oh-my-opencode.json;
   };
@@ -67,7 +62,7 @@
   home.activation.installOhMyOpenCode = lib.hm.dag.entryAfter [ "writeBoundary" "installPackages" "programs.git" ] ''
     export PATH="/opt/homebrew/bin:$PATH"
     if command -v opencode >/dev/null 2>&1 && command -v bunx >/dev/null 2>&1; then
-      bunx oh-my-opencode install --no-tui --claude=yes --chatgpt=no --gemini=no
+      bunx oh-my-opencode install --no-tui --claude=no --chatgpt=no --gemini=no
     else
       echo "opencode or bunx not found, skipping oh-my-opencode install"
     fi
