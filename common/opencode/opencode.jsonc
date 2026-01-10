@@ -1,11 +1,13 @@
 {
   "plugin": [
-    "oh-my-opencode"
+  //  "oh-my-opencode"
   ],
+
   "$schema": "https://opencode.ai/config.json",
   "autoupdate": true,
   "model": "opencode/claude-opus-4-5",
   "small_model": "opencode/glm-4.7-free",
+
   "mcp": {
     "context7": {
       "command": [
@@ -16,6 +18,7 @@
       "enabled": true,
       "type": "local"
     },
+
     "docker": {
       "command": [
         "uvx",
@@ -24,6 +27,7 @@
       "enabled": true,
       "type": "local"
     },
+
     "filesystem": {
       "command": [
         "npx",
@@ -34,6 +38,7 @@
       "enabled": true,
       "type": "local"
     },
+
     "github": {
       "command": [
         "npx",
@@ -46,6 +51,7 @@
       },
       "type": "local"
     },
+
     "sequential-thinking": {
       "command": [
         "npx",
@@ -54,6 +60,50 @@
       ],
       "enabled": true,
       "type": "local"
+    }
+  },
+
+  "agent": {
+    "build": {
+      "mode": "primary",
+      "model": "opencode/glm-4.7-free",
+      "tools": {
+        "write": true,
+        "edit": true,
+        "bash": true
+      }
+    },
+
+    "plan": {
+      "mode": "primary",
+      "model": "opencode/claude-opus-4-5",
+      "tools": {
+        "write": false,
+        "edit": false,
+        "bash": false
+      }
+    },
+
+    "review": {
+      "description": "Reviews code for best practices, potential issues and makes sure the code is ready for production",
+      "mode": "subagent",
+      "model": "opencode/gpt-5.2",
+      "tools": {
+        "write": false,
+        "edit": false,
+        "bash": false
+      }
+    },
+
+    "frontend": {
+      "description": "Reviews frontend code, UI and UX to enhance user experience",
+      "mode": "subagent",
+      "model": "opencode/gemini-3-pro",
+      "tools": {
+        "write": false,
+        "edit": false,
+        "bash": false
+      }
     }
   }
 }
