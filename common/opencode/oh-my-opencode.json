@@ -8,13 +8,13 @@
       "model": "opencode/gpt-5.2"
     },
     "librarian": {
-      "model": "opencode/claude-sonnet-4-5"
+      "model": "opencode/claude-haiku-4-5"
     },
     "explore": {
       "model": "opencode/grok-code"
     },
     "frontend-ui-ux-engineer": {
-      "model": "opencode/gemini-3-pro"
+      "model": "opencode/gemini-3-flash"
     },
     "document-writer": {
       "model": "opencode/gemini-3-flash"
