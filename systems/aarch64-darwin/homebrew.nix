@@ -11,6 +11,9 @@
       "oven-sh/bun/bun"
       "opencode"
       "keeper-commander"
+      "kubernetes-cli"
+      "kubectx"
+      "k9s"
     ];
 
     casks = [
