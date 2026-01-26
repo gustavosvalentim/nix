@@ -66,19 +66,6 @@
     zsh = {
       enable = true;
 
-      initExtra = ''
-        if command -v op >/dev/null 2>&1; then
-          OP_GITHUB_PAT_ITEM="${GITHUB_PAT_OP_ITEM:-Github MCP PAT}"
-          OP_GITHUB_PAT_FIELD="${GITHUB_PAT_OP_FIELD:-token}"
-          GITHUB_PAT_VALUE="$(op item get "$OP_GITHUB_PAT_ITEM" --field "$OP_GITHUB_PAT_FIELD" 2>/dev/null || true)"
-          if [ -n "$GITHUB_PAT_VALUE" ]; then
-            export GITHUB_PAT="$GITHUB_PAT_VALUE"
-          fi
-          unset OP_GITHUB_PAT_ITEM OP_GITHUB_PAT_FIELD GITHUB_PAT_VALUE
-        fi
-      '';
-
-
       oh-my-zsh = {
         enable = true;
         plugins = [

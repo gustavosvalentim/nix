@@ -1,12 +1,12 @@
 {
   "plugin": [
-  //  "oh-my-opencode"
+    // "oh-my-opencode"
   ],
 
   "$schema": "https://opencode.ai/config.json",
   "autoupdate": true,
-  "model": "openai/gpt-5.2-mini",
-  "small_model": "openai/gpt-5.2-mini",
+  "model": "openai/gpt-5.2",
+  "small_model": "openai/gpt-5.2",
 
   "mcp": {
     "context7": {

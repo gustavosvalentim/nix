@@ -13,6 +13,7 @@
       "kubernetes-cli"
       "kubectx"
       "k9s"
+      "gh"
     ];
 
     casks = [
