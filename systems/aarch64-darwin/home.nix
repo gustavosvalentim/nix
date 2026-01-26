@@ -43,10 +43,11 @@
     source = ../../common/macos/DefaultKeyBinding.dict;
   };
 
-  # home.file."opencode-agent-md" = {
-  #   target = "/Users/${username}/.config/opencode/AGENTS.md";
-  #   source = ../../common/opencode/AGENTS.md;
-  # };
+  home.file."opencode-agent-md" = {
+    target = "/Users/${username}/.config/opencode/AGENTS.md";
+    source = ../../common/opencode/AGENTS.md;
+    force = true;
+  };
 
   home.file."opencode-config" = {
     target = "/Users/${username}/.config/opencode/opencode.jsonc";
@@ -75,4 +76,3 @@
     let packages = import ../../common/packages.nix { inherit pkgs username; };
     in packages.programs;
 }
-

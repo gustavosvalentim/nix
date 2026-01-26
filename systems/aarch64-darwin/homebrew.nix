@@ -24,6 +24,7 @@
       "obsidian"
       "clipy"
       "1password"
+      "1password-cli"
     ];
 
     onActivation = {
