@@ -52,7 +52,6 @@
   home.file."opencode-config" = {
     target = "/Users/${username}/.config/opencode/opencode.jsonc";
     source = ../../common/opencode/opencode.jsonc;
-    force = true;
   };
 
   # home.file."oh-my-opencode-config" = {
