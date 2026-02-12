@@ -59,7 +59,7 @@
       "command": [
         "npx",
         "-y",
-        "containers/kubernetes-mcp-server"
+        "kubernetes-mcp-server@latest"
       ],
       "enabled": true,
       "environment": {
