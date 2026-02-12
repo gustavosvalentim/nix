@@ -53,6 +53,19 @@
       ],
       "enabled": true,
       "type": "local"
+    },
+
+    "kubernetes": {
+      "command": [
+        "npx",
+        "-y",
+        "containers/kubernetes-mcp-server"
+      ],
+      "enabled": true,
+      "environment": {
+        "KUBECONFIG": "/Users/gsv/.kube/config"
+      },
+      "type": "local"
     }
   },
 
