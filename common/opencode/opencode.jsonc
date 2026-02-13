@@ -40,7 +40,7 @@
       ],
       "enabled": true,
       "environment": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "$GITHUB_PAT"
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "{env:GITHUB_PAT}"
       },
       "type": "local"
     },
