@@ -46,30 +46,12 @@
   home.file."opencode-agent-md" = {
     target = "/Users/${username}/.config/opencode/AGENTS.md";
     source = ../../common/opencode/AGENTS.md;
-    force = true;
   };
 
   home.file."opencode-config" = {
     target = "/Users/${username}/.config/opencode/opencode.jsonc";
     source = ../../common/opencode/opencode.jsonc;
   };
-
-  # home.file."oh-my-opencode-config" = {
-  #   target = "/Users/${username}/.config/opencode/oh-my-opencode.json";
-  #   source = ../../common/opencode/oh-my-opencode.json;
-  #   force = true;
-  # };
-
-  # Install oh-my-opencode
-  # home.activation.installOhMyOpenCode = lib.hm.dag.entryAfter [ "writeBoundary" "installPackages" "programs.git" ] ''
-  # home.activation.installOhMyOpenCode = lib.hm.dag.entryBefore [ "writeBoundary" ] ''
-  #   export PATH="/opt/homebrew/bin:$PATH"
-  #   if [ ! -f "$HOME/.config/opencode/opencode.jsonc" ] \
-  #     && command -v opencode >/dev/null 2>&1 \
-  #     && command -v bunx >/dev/null 2>&1; then
-  #     bunx oh-my-opencode install --no-tui --claude=no --openai=no --gemini=no --copilot=no
-  #   fi
-  # '';
 
   programs =
     let packages = import ../../common/packages.nix { inherit pkgs username; };

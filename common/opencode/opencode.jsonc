@@ -1,13 +1,8 @@
 {
-  "plugin": [
-    // "oh-my-opencode"
-  ],
-
   "$schema": "https://opencode.ai/config.json",
   "autoupdate": true,
-  "model": "openai/gpt-5.2",
+  "model": "openai/gpt-5.2-codex",
   "small_model": "openai/gpt-5.2",
-
   "mcp": {
     "context7": {
       "command": [
@@ -66,48 +61,6 @@
         "KUBECONFIG": "/Users/gsv/.kube/config"
       },
       "type": "local"
-    }
-  },
-
-  "agent": {
-    "build": {
-      "mode": "primary",
-      "model": "openai/gpt-5.2-codex",
-      "permission": {
-        "edit": "allow",
-        "bash": "allow"
-      }
-    },
-
-    "plan": {
-      "mode": "primary",
-      "model": "openai/gpt-5.2-codex",
-      "reasoningEffort": "high",
-      "permission": {
-        "edit": "deny",
-        "bash": "deny"
-      }
-    },
-
-    "review": {
-      "description": "Reviews code for best practices, potential issues and makes sure the code is ready for production",
-      "mode": "subagent",
-      "model": "openai/gpt-5.2-codex",
-      "reasoningEffort": "high",
-      "permission": {
-        "edit": "deny",
-        "bash": "deny"
-      }
-    },
-
-    "frontend-engineer": {
-      "description": "Reviews frontend code, UI and UX to enhance user experience",
-      "mode": "subagent",
-      "model": "opencode/gemini-3-pro",
-      "permission": {
-        "edit": "deny",
-        "bash": "deny"
-      }
     }
   }
 }
