@@ -32,7 +32,8 @@
     onActivation = {
       autoUpdate = true;
       upgrade = true;
-      cleanup = "zap";
+      # Keep manual brews/casks; "zap" removes items not declared here.
+      cleanup = "none";
     };
   };
 }
