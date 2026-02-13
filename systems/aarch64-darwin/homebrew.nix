@@ -15,6 +15,7 @@
       "kubectx"
       "k9s"
       "gh"
+      "codex"
     ];
 
     casks = [
