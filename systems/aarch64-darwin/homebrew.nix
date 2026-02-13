@@ -15,7 +15,6 @@
       "kubectx"
       "k9s"
       "gh"
-      "codex"
     ];
 
     casks = [
@@ -28,6 +27,7 @@
       "clipy"
       "1password"
       "1password-cli"
+      "codex"
     ];
 
     onActivation = {
