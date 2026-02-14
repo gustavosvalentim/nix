@@ -1,10 +1,11 @@
-{ pkgs, username, ... }: 
+{ pkgs, username, config, ... }: 
 
 {
   darwinPackages = with pkgs; [
     bat
     ripgrep
     tree
+    golangci-lint
     gopls
     nodejs
     claude-code
@@ -63,6 +64,10 @@
       enableZshIntegration = true;
     };
 
+    jq = {
+      enable = true;
+    };
+
     zsh = {
       enable = true;
 
@@ -113,7 +118,8 @@
     go = {
       enable = true;
       env = { 
-        GOPATH = "Documents/go";
+        GOPATH = "${config.home.homeDirectory}/go";
+        GOBIN = "${config.home.homeDirectory}/go/bin";
         GOPRIVATE = [ "github.com/gustavosvalentim" ];
       };
     };

@@ -1,4 +1,4 @@
-{ pkgs, lib, username, ... }:
+{ pkgs, lib, username, config, ... }:
 
 {
   # this is internal compatibility configuration 
@@ -17,7 +17,7 @@
   };
 
   home.packages = let
-    packages = import ../../common/packages.nix { inherit pkgs username; };
+    packages = import ../../common/packages.nix { inherit pkgs username config; };
     in packages.darwinPackages;
 
   fonts.fontconfig.enable = true;
@@ -54,6 +54,6 @@
   };
 
   programs =
-    let packages = import ../../common/packages.nix { inherit pkgs username; };
+    let packages = import ../../common/packages.nix { inherit pkgs username config; };
     in packages.programs;
 }

@@ -14,7 +14,6 @@
       "kustomize"
       "kubectx"
       "k9s"
-      "gh"
     ];
 
     casks = [
