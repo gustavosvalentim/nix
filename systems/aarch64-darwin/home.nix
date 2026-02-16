@@ -53,6 +53,12 @@
     source = ../../common/opencode/opencode.jsonc;
   };
 
+  home.file."opencode-skills" = {
+    target = "/Users/${username}/.config/opencode/skills";
+    source = ../../common/opencode/skills;
+    recursive = true;
+  };
+
   programs =
     let packages = import ../../common/packages.nix { inherit pkgs username config; };
     in packages.programs;
