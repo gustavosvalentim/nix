@@ -32,7 +32,7 @@
   '';
 
   home.file."ghostty-config" = {
-    target = "/Users/${username}/Library/Application\ Support/com.mitchellh.ghostty/config";
+    target = "Library/Application Support/com.mitchellh.ghostty/config";
     source = ../../common/ghostty/config;
     force = true;
   };
@@ -63,6 +63,7 @@
   home.file."codex-config" = {
     target = "/Users/${username}/.codex/config.toml";
     source = ../../common/codex/config.toml;
+    force = true;
   };
 
   home.file."codex-skill-commit" = {
