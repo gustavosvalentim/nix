@@ -19,7 +19,7 @@ Execute a full pre-commit workflow: review changes, run project checks, repair f
 2. Perform a code review before automation.
 - Read modified files and look for obvious bugs, regressions, missing validation, or unsafe behavior.
 - Prioritize correctness and behavior over style.
-- Keep only relevant comments on business logic that is hard to read or complex.
+- Keep comments only on business logic that is hard to read or complex.
 - For each meaningful code change, verify documentation is updated where needed (for example `README*`, `docs/**`, runbooks, ADRs, API docs, config guides, migration notes).
 - If documentation is missing or stale for a behavior/config/API change, report it as a finding and propose the exact docs that should be updated.
 
