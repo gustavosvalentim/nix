@@ -34,6 +34,7 @@
   home.file."ghostty-config" = {
     target = "/Users/${username}/Library/Application\ Support/com.mitchellh.ghostty/config";
     source = ../../common/ghostty/config;
+    force = true;
   };
 
   # Workaround for muting ghostty when resizing split windows

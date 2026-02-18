@@ -57,5 +57,12 @@ bell-features = "no-audio"
 
 theme = Monokai Remastered
 
+gtk-tabs-location = hidden
+scrollback-limit = 10_000
+clipboard-paste-protection = false
+window-decoration = false
+shell-integration = zsh
+
+# Transparency
 background-opacity = 0.85
 background-blur-radius = 15
