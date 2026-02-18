@@ -54,9 +54,27 @@
     source = ../../common/opencode/opencode.jsonc;
   };
 
-  home.file."opencode-skills" = {
-    target = "/Users/${username}/.config/opencode/skills";
-    source = ../../common/opencode/skills;
+  home.file."opencode-skill-skill-creator" = {
+    target = "/Users/${username}/.config/opencode/skills/skill-creator";
+    source = ../../common/opencode/skills/skill-creator;
+    recursive = true;
+  };
+
+  home.file."opencode-skill-commit" = {
+    target = "/Users/${username}/.config/opencode/skills/commit";
+    source = ../../common/codex/skills/commit;
+    recursive = true;
+  };
+
+  home.file."opencode-skill-planning" = {
+    target = "/Users/${username}/.config/opencode/skills/planning";
+    source = ../../common/codex/skills/planning;
+    recursive = true;
+  };
+
+  home.file."opencode-skill-pre-commit" = {
+    target = "/Users/${username}/.config/opencode/skills/pre-commit";
+    source = ../../common/codex/skills/pre-commit;
     recursive = true;
   };
 
