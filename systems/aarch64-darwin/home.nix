@@ -59,6 +59,29 @@
     recursive = true;
   };
 
+  home.file."codex-config" = {
+    target = "/Users/${username}/.codex/config.toml";
+    source = ../../common/codex/config.toml;
+  };
+
+  home.file."codex-skill-commit" = {
+    target = "/Users/${username}/.codex/skills/commit";
+    source = ../../common/codex/skills/commit;
+    recursive = true;
+  };
+
+  home.file."codex-skill-planning" = {
+    target = "/Users/${username}/.codex/skills/planning";
+    source = ../../common/codex/skills/planning;
+    recursive = true;
+  };
+
+  home.file."codex-skill-pre-commit" = {
+    target = "/Users/${username}/.codex/skills/pre-commit";
+    source = ../../common/codex/skills/pre-commit;
+    recursive = true;
+  };
+
   programs =
     let packages = import ../../common/packages.nix { inherit pkgs username config; };
     in packages.programs;

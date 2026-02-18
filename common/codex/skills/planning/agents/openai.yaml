@@ -1,0 +1,4 @@
+interface:
+  display_name: "Planning"
+  short_description: "Plan architecture with Context7 and project patterns"
+  default_prompt: "Use $planning to propose an implementation plan with current docs, architecture options, and project-aligned best practices."
