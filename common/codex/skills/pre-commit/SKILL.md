@@ -7,7 +7,8 @@ description: Perform pre-commit validation without creating a commit by running 
 
 ## Overview
 
-Execute a full pre-commit workflow: review changes, run project checks, detect correctness/security/design issues, fix all critical findings, re-run checks until stable, and deliver a structured validation summary. Do not create a commit in this skill.
+Execute a full pre-commit workflow: review changes, run project checks, detect correctness/security/design/dead-code issues, fix all critical findings, re-run checks until stable, and deliver a structured validation summary. Do not create a commit in this skill.
+Treat this as a production-readiness gate, not a style pass.
 
 Use supporting resources from this skill:
 - `references/severity-rubric.md` for severity classification and fix gates.
@@ -24,6 +25,11 @@ Classify each finding with one severity and one category.
   - command/code injection paths,
   - unsafe deserialization, SSRF, RCE, or secret leakage,
   - data corruption/loss risks,
+  - behavior regressions or backward-compatibility breaks in changed scope without explicit approval,
+  - unsafe schema/config/data migration changes without safe rollout/rollback rationale,
+  - high-confidence race/concurrency defects,
+  - behavior-changing code without adequate test coverage for the changed critical path,
+  - dead code introduced by the current change set (for example newly added unused functions, unreachable branches, or never-used internal APIs in modified scope),
   - high-confidence insecure dependency findings from project-native audit commands.
 - Non-critical:
   - maintainability smells,
@@ -44,12 +50,20 @@ Mandatory action:
 - Identify likely stack and tooling from files like `Makefile`, `package.json`, `pyproject.toml`, `go.mod`, `Cargo.toml`, and CI configs.
 - Run `bash "${CODEX_HOME:-$HOME/.codex}/skills/pre-commit/scripts/precommit_review_checklist.sh"` to scaffold the review and output sections.
 
-2. Perform a code review before automation.
+2. Perform a change-risk gate before automation.
+- For each meaningful change, record: affected behavior/surfaces, blast radius, failure modes, and rollback path.
+- Mark whether risk is low/medium/high with rationale.
+- If high-risk changes lack mitigation or rollback clarity, treat as critical and block.
+
+3. Perform a code review before automation.
 - Read modified files and evaluate them against `references/anti-pattern-catalog.md`.
 - Detect:
   - inconsistencies with existing project conventions/patterns,
   - anti-patterns and bad design patterns,
+  - dead code introduced by the change (unused functions/types/variables, unreachable code paths, stale branches),
   - insecure code paths and weak validation,
+  - runtime safety gaps (timeouts, retries, idempotency, error handling, resource cleanup),
+  - data/privacy issues (PII handling, secret leakage, unsafe logging/telemetry),
   - risky package/dependency changes.
 - Use `references/severity-rubric.md` to classify each finding.
 - Prioritize correctness and behavior over style.
@@ -57,19 +71,21 @@ Mandatory action:
 - For each meaningful code change, verify documentation is updated where needed (for example `README*`, `docs/**`, runbooks, ADRs, API docs, config guides, migration notes).
 - If documentation is missing or stale for a behavior/config/API change, report it as a finding and propose the exact docs that should be updated.
 
-3. Build the check plan from project-native commands.
+4. Build the check plan from project-native commands.
 - Prefer repository-defined commands first (`make`, npm/pnpm scripts, task runners, documented commands).
 - Fallback to language defaults only when project commands are unavailable.
+- Include an explicit dead-code detection command for the repository stack.
 - For dependency security: use project-native audit commands only. If none exist, report the gap explicitly.
 
-4. Run checks in this order.
+5. Run checks in this order.
 - Tests.
 - Linters/static analysis.
+- Dead-code detection (if separate from general lint/static analysis).
 - Formatters.
 - Build/compile checks if available.
 - Project-native dependency audit checks, if configured.
 
-5. Fix issues and iterate.
+6. Fix issues and iterate.
 - Fix all critical findings from review and checks.
 - Apply high-confidence, minimal-risk fixes only.
 - Do not introduce new dependencies unless required for a critical fix and aligned with project conventions.
@@ -78,18 +94,27 @@ Mandatory action:
 - If there were changes since step 4, re-run the full check chain before committing.
 - If any critical issue remains unresolved, mark the run as blocked and explain why.
 
-6. Prepare final validation summary.
+7. Prepare final validation summary.
 - Summarize what was reviewed, what failed, what was fixed, and what remains.
 - Include final status of test/lint/format/build/audit checks.
 - Enumerate all meaningful file-level changes and behavior impacts.
 - Include a documentation coverage section: map important code changes to corresponding docs updates, or explicitly state why no docs update is required.
 - Include notes on issues, risks, assumptions, and code considerations (maintainability, edge cases, config hardcoding, security/privacy concerns, and test coverage gaps).
+- Include a release-readiness verdict: `ready`, `ready-with-risks`, or `blocked`.
 - If useful, include a suggested Conventional Commit message, but do not run `git commit`.
 
 ## Command Selection Heuristics
 
 - Prefer explicit project instructions over guessed defaults.
 - If multiple toolchains exist, follow the one used by CI/workflow files.
+- Dead-code detection is mandatory in this skill for all repositories:
+  - Prefer repo-defined commands that include dead-code analysis.
+  - If no repo-defined command exists, run language/toolchain defaults when available.
+  - If no dead-code-capable command is available, report a blocking gap: "dead code detection not configured".
+- Distinguish findings in changed scope vs pre-existing outside scope:
+  - changed-scope critical findings must be fixed or explicitly blocked,
+  - pre-existing outside-scope findings should be reported with follow-up unless they create immediate production risk.
+- Never claim check success without command evidence (command, exit status, key output signal).
 - If no test or lint command exists, report that clearly instead of inventing fake success.
 - If no project-native dependency audit command exists, report "dependency audit not configured" instead of claiming dependency safety.
 - Never claim checks passed unless they were actually run successfully.
@@ -104,17 +129,24 @@ Mandatory action:
 ## Output Contract
 
 Always provide:
+- Change-risk assessment (blast radius, failure modes, rollback path, risk level).
 - Findings from manual review (ordered by severity) with:
   - severity,
   - category,
   - file/path,
   - risk summary,
+  - scope (`changed` or `pre-existing`),
   - status (`fixed` or `unresolved`).
 - Critical fixes applied (what changed and why it resolves the risk).
-- Checks executed and their final status.
+- Checks executed and their final status, with evidence:
+  - command,
+  - exit status,
+  - key output signal.
+- Dead-code detection command(s) executed and final status (or explicit configuration gap).
 - Files changed by the fix pass.
 - Detailed summary of all meaningful code changes and expected behavior impact.
 - Documentation coverage result for changed code (updated docs, required docs follow-ups, or explicit "not required" rationale).
 - Notes about issues or considerations (risk, follow-up work, potential regressions, test gaps).
 - Residual risks and required follow-up actions for unresolved findings.
 - Any remaining risks or follow-up work.
+- Final release-readiness verdict (`ready` / `ready-with-risks` / `blocked`) with rationale.
