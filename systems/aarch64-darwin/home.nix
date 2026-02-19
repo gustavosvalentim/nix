@@ -1,7 +1,7 @@
 { pkgs, lib, username, config, ... }:
 
 {
-  # this is internal compatibility configuration 
+  # this is internal compatibility configuration
   # for home-manager, don't change this!
   home.stateVersion = "23.05";
 
@@ -27,8 +27,21 @@
     REPOSITORY="https://github.com/gustavosvalentim/nvim"
     DIRECTORY="$HOME/.config/nvim"
     if [ ! -d "$DIRECTORY" ]; then
-      ${pkgs.git}/bin/git clone "$REPOSITORY" "$DIRECTORY" 
+      ${pkgs.git}/bin/git clone "$REPOSITORY" "$DIRECTORY"
     fi
+  '';
+
+  # Codex does not reliably discover user skills when SKILL.md/openai.yaml are symlinks.
+  # Keep source of truth in nix and copy concrete files into ~/.codex/skills at activation.
+  home.activation.syncCodexSkills = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    CODEX_SKILLS_DIR="$HOME/.codex/skills"
+    mkdir -p "$CODEX_SKILLS_DIR"
+
+    rm -rf "$CODEX_SKILLS_DIR/commit" "$CODEX_SKILLS_DIR/planning" "$CODEX_SKILLS_DIR/pre-commit"
+
+    cp -R ${../../common/codex/skills/commit} "$CODEX_SKILLS_DIR/commit"
+    cp -R ${../../common/codex/skills/planning} "$CODEX_SKILLS_DIR/planning"
+    cp -R ${../../common/codex/skills/pre-commit} "$CODEX_SKILLS_DIR/pre-commit"
   '';
 
   home.file."ghostty-config" = {
@@ -82,24 +95,6 @@
     target = "/Users/${username}/.codex/config.toml";
     source = ../../common/codex/config.toml;
     force = true;
-  };
-
-  home.file."codex-skill-commit" = {
-    target = "/Users/${username}/.codex/skills/commit";
-    source = ../../common/codex/skills/commit;
-    recursive = true;
-  };
-
-  home.file."codex-skill-planning" = {
-    target = "/Users/${username}/.codex/skills/planning";
-    source = ../../common/codex/skills/planning;
-    recursive = true;
-  };
-
-  home.file."codex-skill-pre-commit" = {
-    target = "/Users/${username}/.codex/skills/pre-commit";
-    source = ../../common/codex/skills/pre-commit;
-    recursive = true;
   };
 
   programs =
