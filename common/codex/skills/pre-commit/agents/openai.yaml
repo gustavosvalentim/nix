@@ -1,4 +1,4 @@
 interface:
   display_name: "Pre-commit"
-  short_description: "Review for anti-patterns and fix critical risks"
-  default_prompt: "Use $pre-commit to review my current changes for inconsistencies, anti-patterns, and security risks, fix all critical issues, and output a structured findings and fixes summary."
+  short_description: "Lightweight pre-commit review and fixes"
+  default_prompt: "Use -commit to review my changes, fix issues, and report readiness."

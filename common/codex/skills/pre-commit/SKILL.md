@@ -1,152 +1,125 @@
 ---
 name: pre-commit
-description: Perform pre-commit validation without creating a commit by running local code review plus project-native checks to detect inconsistencies, anti-patterns, bad design patterns, insecure code, and insecure dependencies. Fix all critical findings, report non-critical findings by default, and output a structured findings and fixes summary. Use when the user asks to "run pre-commit checks", "validate changes before commit", "clean up before commit", "review code before commit", "find security issues before commit", or any request that combines verification + remediation without committing.
+description: Review changed code and run project-native pre-commit checks to detect and fix issues before commit, including tests, lint/static analysis, formatting, dead-code detection, build, and dependency audit (when configured). Never creates a commit. Use when the user asks to run pre-commit checks, validate changes before commit, clean up before commit, or review code before committing.
 ---
 
 # Pre-commit
 
-## Overview
+## Purpose
 
-Execute a full pre-commit workflow: review changes, run project checks, detect correctness/security/design/dead-code issues, fix all critical findings, re-run checks until stable, and deliver a structured validation summary. Do not create a commit in this skill.
-Treat this as a production-readiness gate, not a style pass.
+Run a concise, high-signal pre-commit workflow. Review changes for quality, architecture, testing, requirements, production readiness, and YAGNI. Then run project-native checks, fix all issues found, and repeat until no issues remain or user input is required.
 
-Use supporting resources from this skill:
-- `references/severity-rubric.md` for severity classification and fix gates.
-- `references/anti-pattern-catalog.md` for review categories and fix patterns.
-- `scripts/precommit_review_checklist.sh` to generate a deterministic review checklist and report skeleton.
+## Required Review Topics
 
-## Severity Policy
-
-Classify each finding with one severity and one category.
-
-- Critical:
-  - exploitable or realistically abusable security issues (including high and medium security risk),
-  - auth/authz flaws,
-  - command/code injection paths,
-  - unsafe deserialization, SSRF, RCE, or secret leakage,
-  - data corruption/loss risks,
-  - behavior regressions or backward-compatibility breaks in changed scope without explicit approval,
-  - unsafe schema/config/data migration changes without safe rollout/rollback rationale,
-  - high-confidence race/concurrency defects,
-  - behavior-changing code without adequate test coverage for the changed critical path,
-  - dead code introduced by the current change set (for example newly added unused functions, unreachable branches, or never-used internal APIs in modified scope),
-  - high-confidence insecure dependency findings from project-native audit commands.
-- Non-critical:
-  - maintainability smells,
-  - low-risk anti-patterns,
-  - style-only concerns,
-  - speculative risks without strong evidence.
-
-Mandatory action:
-- Fix all critical findings in the same run.
-- Report non-critical findings by default; do not auto-fix non-critical findings unless the user asks.
-- If a critical finding cannot be safely fixed without product decisions, stop and escalate clearly.
+- Code Quality: separation of concerns; error handling; type safety; DRY; edge cases.
+- Architecture: sound design; scalability; performance; security.
+- Testing: tests hit real logic (not only mocks); edge cases; integration tests where needed; all tests passing.
+- Requirements: plan requirements met; implementation matches spec; no scope creep; breaking changes documented.
+- Production Readiness: migration strategy for schema changes; backward compatibility; docs complete; no obvious bugs.
+- YAGNI: avoid speculative, unused, or premature functionality.
+- Comments: only use comments on business rules that are hard to read or too complex.
 
 ## Workflow
 
-1. Inspect current repository state.
-- Run `git status --short`.
-- Review changed files and staged vs unstaged state.
-- Identify likely stack and tooling from files like `Makefile`, `package.json`, `pyproject.toml`, `go.mod`, `Cargo.toml`, and CI configs.
-- Run `bash "${CODEX_HOME:-$HOME/.codex}/skills/pre-commit/scripts/precommit_review_checklist.sh"` to scaffold the review and output sections.
+1. Inspect repo state and changed files (`git status --short`).
+2. Summarize change risk: blast radius, failure modes, rollback path, risk level.
+3. Perform manual review against Required Review Topics and project conventions.
+4. Build a check plan from repo-native commands (tests, lint/static analysis, build/compile, dead-code detection, dependency audit if configured).
+5. Run checks in order: tests, lint/static, dead-code, format, build, audit.
+6. Fix all issues found (manual review or checks). If a fix needs product input, stop and ask.
+7. Re-run affected checks; repeat review + checks until no issues remain.
+8. Produce final report.
 
-2. Perform a change-risk gate before automation.
-- For each meaningful change, record: affected behavior/surfaces, blast radius, failure modes, and rollback path.
-- Mark whether risk is low/medium/high with rationale.
-- If high-risk changes lack mitigation or rollback clarity, treat as critical and block.
+## Rules
 
-3. Perform a code review before automation.
-- Read modified files and evaluate them against `references/anti-pattern-catalog.md`.
-- Detect:
-  - inconsistencies with existing project conventions/patterns,
-  - anti-patterns and bad design patterns,
-  - dead code introduced by the change (unused functions/types/variables, unreachable code paths, stale branches),
-  - insecure code paths and weak validation,
-  - runtime safety gaps (timeouts, retries, idempotency, error handling, resource cleanup),
-  - data/privacy issues (PII handling, secret leakage, unsafe logging/telemetry),
-  - risky package/dependency changes.
-- Use `references/severity-rubric.md` to classify each finding.
-- Prioritize correctness and behavior over style.
-- Keep comments only on business logic that is hard to read or complex.
-- For each meaningful code change, verify documentation is updated where needed (for example `README*`, `docs/**`, runbooks, ADRs, API docs, config guides, migration notes).
-- If documentation is missing or stale for a behavior/config/API change, report it as a finding and propose the exact docs that should be updated.
+- Do not commit, rewrite history, or run destructive git operations.
+- Prefer repo-defined commands over guessed defaults.
+- If a required command is missing (tests, dead-code, audit), report it as an issue and ask for guidance.
+- Never claim a check passed without running it and reporting evidence.
+- Keep fixes minimal and aligned with existing conventions; avoid new dependencies unless required.
 
-4. Build the check plan from project-native commands.
-- Prefer repository-defined commands first (`make`, npm/pnpm scripts, task runners, documented commands).
-- Fallback to language defaults only when project commands are unavailable.
-- Include an explicit dead-code detection command for the repository stack.
-- For dependency security: use project-native audit commands only. If none exist, report the gap explicitly.
+## Output Format
 
-5. Run checks in this order.
-- Tests.
-- Linters/static analysis.
-- Dead-code detection (if separate from general lint/static analysis).
-- Formatters.
-- Build/compile checks if available.
-- Project-native dependency audit checks, if configured.
+### Strengths
+[What's well done? Be specific.]
 
-6. Fix issues and iterate.
-- Fix all critical findings from review and checks.
-- Apply high-confidence, minimal-risk fixes only.
-- Do not introduce new dependencies unless required for a critical fix and aligned with project conventions.
-- Report non-critical findings without auto-fixing unless user asks.
-- If there were changes since step 4, re-run affected checks immediately.
-- If there were changes since step 4, re-run the full check chain before committing.
-- If any critical issue remains unresolved, mark the run as blocked and explain why.
+### Issues
 
-7. Prepare final validation summary.
-- Summarize what was reviewed, what failed, what was fixed, and what remains.
-- Include final status of test/lint/format/build/audit checks.
-- Enumerate all meaningful file-level changes and behavior impacts.
-- Include a documentation coverage section: map important code changes to corresponding docs updates, or explicitly state why no docs update is required.
-- Include notes on issues, risks, assumptions, and code considerations (maintainability, edge cases, config hardcoding, security/privacy concerns, and test coverage gaps).
-- Include a release-readiness verdict: `ready`, `ready-with-risks`, or `blocked`.
-- If useful, include a suggested Conventional Commit message, but do not run `git commit`.
+#### Critical (Must Fix)
+[Bugs, security issues, data loss risks, broken functionality]
 
-## Command Selection Heuristics
+#### Important (Should Fix)
+[Architecture problems, missing features, poor error handling, test gaps]
 
-- Prefer explicit project instructions over guessed defaults.
-- If multiple toolchains exist, follow the one used by CI/workflow files.
-- Dead-code detection is mandatory in this skill for all repositories:
-  - Prefer repo-defined commands that include dead-code analysis.
-  - If no repo-defined command exists, run language/toolchain defaults when available.
-  - If no dead-code-capable command is available, report a blocking gap: "dead code detection not configured".
-- Distinguish findings in changed scope vs pre-existing outside scope:
-  - changed-scope critical findings must be fixed or explicitly blocked,
-  - pre-existing outside-scope findings should be reported with follow-up unless they create immediate production risk.
-- Never claim check success without command evidence (command, exit status, key output signal).
-- If no test or lint command exists, report that clearly instead of inventing fake success.
-- If no project-native dependency audit command exists, report "dependency audit not configured" instead of claiming dependency safety.
-- Never claim checks passed unless they were actually run successfully.
+#### Minor (Nice to Have)
+[Code style, optimization opportunities, documentation improvements]
 
-## Safety Rules
+**For each issue:**
+- File:line reference
+- What's wrong
+- Why it matters
+- How to fix (if not obvious)
 
-- Do not use destructive git operations unless explicitly requested.
-- Do not rewrite history unless explicitly requested.
-- Do not hide uncertainty: when exploitability or behavior is unclear, document confidence and rationale.
-- Stop and ask the user if blockers require product decisions (for example, conflicting intended behavior).
+### Recommendations
+[Improvements for code quality, architecture, or process]
 
-## Output Contract
+### Assessment
 
-Always provide:
-- Change-risk assessment (blast radius, failure modes, rollback path, risk level).
-- Findings from manual review (ordered by severity) with:
-  - severity,
-  - category,
-  - file/path,
-  - risk summary,
-  - scope (`changed` or `pre-existing`),
-  - status (`fixed` or `unresolved`).
-- Critical fixes applied (what changed and why it resolves the risk).
-- Checks executed and their final status, with evidence:
-  - command,
-  - exit status,
-  - key output signal.
-- Dead-code detection command(s) executed and final status (or explicit configuration gap).
-- Files changed by the fix pass.
-- Detailed summary of all meaningful code changes and expected behavior impact.
-- Documentation coverage result for changed code (updated docs, required docs follow-ups, or explicit "not required" rationale).
-- Notes about issues or considerations (risk, follow-up work, potential regressions, test gaps).
-- Residual risks and required follow-up actions for unresolved findings.
-- Any remaining risks or follow-up work.
-- Final release-readiness verdict (`ready` / `ready-with-risks` / `blocked`) with rationale.
+**Ready to merge?** [Yes/No/With fixes]
+
+**Reasoning:** [Technical assessment in 1-2 sentences]
+
+## Critical Rules
+
+**DO:**
+- Categorize by actual severity (not everything is Critical)
+- Be specific (file:line, not vague)
+- Explain WHY issues matter
+- Acknowledge strengths
+- Give clear verdict
+
+**DON'T:**
+- Say "looks good" without checking
+- Mark nitpicks as Critical
+- Give feedback on code you didn't review
+- Be vague ("improve error handling")
+- Avoid giving a clear verdict
+
+## Example Output
+
+```
+### Strengths
+- Clean database schema with proper migrations (db.ts:15-42)
+- Comprehensive test coverage (18 tests, all edge cases)
+- Good error handling with fallbacks (summarizer.ts:85-92)
+
+### Issues
+
+#### Important
+1. **Missing help text in CLI wrapper**
+   - File: index-conversations:1-31
+   - Issue: No --help flag, users won't discover --concurrency
+   - Fix: Add --help case with usage examples
+
+2. **Date validation missing**
+   - File: search.ts:25-27
+   - Issue: Invalid dates silently return no results
+   - Fix: Validate ISO format, throw error with example
+
+#### Minor
+1. **Progress indicators**
+   - File: indexer.ts:130
+   - Issue: No "X of Y" counter for long operations
+   - Impact: Users don't know how long to wait
+
+### Recommendations
+- Add progress reporting for user experience
+- Consider config file for excluded projects (portability)
+
+### Assessment
+
+**Ready to merge: With fixes**
+
+**Reasoning:** Core implementation is solid with good architecture and tests. Important issues (help text, date validation) are easily fixed and don't affect core functionality.
+```
+
