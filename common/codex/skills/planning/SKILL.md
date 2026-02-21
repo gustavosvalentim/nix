@@ -10,12 +10,11 @@ Create high-quality implementation plans before coding. Ground decisions in up-t
 ## Workflow
 
 1. Clarify scope and constraints.
-2. Use Sequential Thinking to structure planning.
-3. Inspect current project patterns.
-4. Fetch current documentation with Context7.
-5. Generate architecture options when multiple designs are viable.
-6. Recommend one approach with rationale.
-7. Produce a concrete execution plan.
+2. Inspect current project patterns.
+3. Fetch current documentation with Context7.
+4. Generate architecture options when multiple designs are viable.
+5. Recommend one approach with rationale.
+6. Produce a concrete execution plan.
 
 ## 1) Clarify Scope and Constraints
 
@@ -28,20 +27,7 @@ Capture:
 
 If key constraints are missing, ask focused follow-up questions.
 
-## 2) Use Sequential Thinking for Plan Quality (Required)
-
-Use `mcp__sequential-thinking__sequentialthinking` to reason through the plan before finalizing recommendations.
-
-Apply it to:
-
-- Break down the problem into clear planning steps
-- Evaluate alternative architectures and tradeoffs
-- Revise assumptions when new constraints appear
-- Validate that the final recommendation is coherent and complete
-
-Do not skip this step for non-trivial planning tasks.
-
-## 3) Inspect Existing Project Patterns
+## 2) Inspect Existing Project Patterns
 
 Read relevant files before proposing architecture:
 
@@ -52,7 +38,7 @@ Read relevant files before proposing architecture:
 
 Prefer plans that extend existing patterns over introducing new frameworks or paradigms without justification.
 
-## 4) Use Context7 for Current Documentation (Required)
+## 3) Use Context7 for Current Documentation (Required)
 
 For each important dependency/framework in the plan:
 
@@ -63,7 +49,7 @@ For each important dependency/framework in the plan:
 Do not rely on memory when library behavior or APIs may have changed.
 If documentation is ambiguous, state the uncertainty explicitly in the plan.
 
-## 5) Provide Design Options When Multiple Approaches Exist
+## 4) Provide Design Options When Multiple Approaches Exist
 
 When there are materially different designs, present at least 2 options.
 For each option, include:
@@ -77,7 +63,7 @@ For each option, include:
 
 Avoid fake options. If one approach is clearly dominant, still mention alternatives briefly and explain why they were rejected.
 
-## 6) Recommend an Approach
+## 5) Recommend an Approach
 
 Select the best option and justify it using:
 
@@ -86,7 +72,7 @@ Select the best option and justify it using:
 - Maintainability and extensibility
 - Operational risk and testing strategy
 
-## 7) Output Plan Format
+## 6) Output Plan Format
 
 Always provide:
 

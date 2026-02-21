@@ -2,21 +2,6 @@
 command = "npx"
 args = ["-y", "@upstash/context7-mcp"]
 
-[mcp_servers.filesystem]
-command = "npx"
-args = ["-y", "@modelcontextprotocol/server-filesystem", "/Users/gsv/repos", "/Users/gsv/.config/nix", "/Users/gsv/.config/opencode", "/Users/gsv/.codex"]
-
-[mcp_servers.github]
-command = "npx"
-args = ["-y", "@modelcontextprotocol/server-github"]
-
-[mcp_servers.github.env]
-GITHUB_PERSONAL_ACCESS_TOKEN = "$GITHUB_PAT"
-
-[mcp_servers.sequential-thinking]
-command = "npx"
-args = ["-y", "@modelcontextprotocol/server-sequential-thinking"]
-
 [mcp_servers.serena]
 command = "uvx"
 args = ["--from", "git+https://github.com/oraios/serena", "serena", "start-mcp-server", "--open-web-dashboard", "false", "--context", "codex"]

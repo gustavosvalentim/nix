@@ -44,6 +44,19 @@
     cp -R ${../../common/codex/skills/write-skill} "$CODEX_SKILLS_DIR/write-skill"
   '';
 
+  # Copy Codex config/prompts to avoid symlinks.
+  home.activation.syncCodexConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    CODEX_DIR="$HOME/.codex"
+    mkdir -p "$CODEX_DIR"
+
+    rm -f "$CODEX_DIR/config.toml"
+    cp ${../../common/codex/config.toml} "$CODEX_DIR/config.toml"
+
+    rm -rf "$CODEX_DIR/prompts"
+    mkdir -p "$CODEX_DIR/prompts"
+    cp -R ${../../common/codex/prompts}/. "$CODEX_DIR/prompts"
+  '';
+
   home.file."ghostty-config" = {
     target = "Library/Application Support/com.mitchellh.ghostty/config";
     source = ../../common/ghostty/config;
@@ -89,12 +102,6 @@
     target = "/Users/${username}/.config/opencode/skills/write-skill";
     source = ../../common/codex/skills/write-skill;
     recursive = true;
-  };
-
-  home.file."codex-config" = {
-    target = "/Users/${username}/.codex/config.toml";
-    source = ../../common/codex/config.toml;
-    force = true;
   };
 
   programs =
