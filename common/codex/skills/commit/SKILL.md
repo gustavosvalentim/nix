@@ -1,6 +1,6 @@
 ---
 name: commit
-description: Review changed code, run project-native checks, fix issues, and then create a conventional commit when requested. Use when the user asks to validate changes before commit, clean up before commit, review code before committing, or make the commit.
+description: Review changed code, run project-native checks, fix issues, and then create a conventional commit. Use when the user asks to validate changes before commit, clean up before commit, review code before committing, or make the commit.
 metadata:
   short-description: Pre-commit remediation plus conventional commits
 ---
@@ -9,7 +9,7 @@ metadata:
 
 ## Purpose
 
-Run a high-signal pre-commit workflow that finds and fixes issues, then creates a clean conventional commit when requested.
+Run a high-signal pre-commit workflow that finds and fixes issues, then creates a clean conventional commit. Do not push.
 
 ## Required Review Topics
 
@@ -31,7 +31,7 @@ Run a high-signal pre-commit workflow that finds and fixes issues, then creates 
 7. Fix all issues found. If a fix needs product input, stop and ask.
 8. Re-run affected checks and repeat until no issues remain.
 9. Stage intentionally (`git add <file>`, `git add -p`) and verify staged diff.
-10. If the user asked for a commit (or asks to finish with a commit), create a Conventional Commit message and run `git commit`.
+10. Create a Conventional Commit message and run `git commit` without additional confirmation. Do not push.
 11. Verify commit with `git show` and `git log --oneline -5`.
 
 ## Verification Command Discovery (Mandatory)
@@ -66,7 +66,7 @@ Run a high-signal pre-commit workflow that finds and fixes issues, then creates 
 - Prefer repo-defined commands over guessed defaults.
 - Keep fixes minimal and aligned to existing conventions.
 - Do not rewrite history or run destructive git operations unless explicitly requested.
-- If the user asked only for pre-commit validation, stop before committing.
+- Do not push commits.
 
 ## Output Format
 
