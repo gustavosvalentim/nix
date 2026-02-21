@@ -1,208 +1,92 @@
 ---
 name: commit
-description: Create well-structured git commits following conventional commits format. Use when the user asks to commit changes or when finishing a piece of work.
+description: Review changed code, run project-native checks, fix issues, and then create a conventional commit when requested. Use when the user asks to validate changes before commit, clean up before commit, review code before committing, or make the commit.
 metadata:
-  short-description: Commit workflow
+  short-description: Pre-commit remediation plus conventional commits
 ---
 
 # Commit Workflow
 
-Create clean, meaningful commits that tell a story following the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification.
+## Purpose
 
-## Before Committing
+Run a high-signal pre-commit workflow that finds and fixes issues, then creates a clean conventional commit when requested.
 
-### 1. Review Changes
+## Required Review Topics
 
-```bash
-# See what's changed
-git status
-git diff
+- Code Quality: separation of concerns; error handling; type safety; DRY; edge cases.
+- Architecture: design soundness; scalability; performance; security.
+- Testing: coverage of real logic and edge cases; integration tests where needed.
+- Requirements: implementation matches spec; no unintended scope creep; breaking changes documented.
+- Production Readiness: migration safety; backward compatibility; docs completeness.
+- YAGNI: avoid speculative or unused functionality.
 
-# See staged changes
-git diff --staged
-```
+## Workflow
 
-Check for:
-- Unintended changes
-- Debug code or console.log statements
-- Commented-out code
-- Hardcoded values that should be configurable
-- Sensitive data (secrets, credentials, PII)
+1. Inspect repo state and changed files (`git status --short`, `git diff`, `git diff --staged`).
+2. Summarize risk: blast radius, failure modes, rollback path, risk level.
+3. Manually review against Required Review Topics and project conventions.
+4. Build the check plan by discovering exact repo-native verification commands from project files.
+5. Run every discovered verification command in order: tests, lint/static, typecheck, dead-code, format check, build, audit.
+6. If no verification commands can be discovered, explicitly report that and ask the user whether to continue without verification.
+7. Fix all issues found. If a fix needs product input, stop and ask.
+8. Re-run affected checks and repeat until no issues remain.
+9. Stage intentionally (`git add <file>`, `git add -p`) and verify staged diff.
+10. If the user asked for a commit (or asks to finish with a commit), create a Conventional Commit message and run `git commit`.
+11. Verify commit with `git show` and `git log --oneline -5`.
 
-### 2. Run Tests
+## Verification Command Discovery (Mandatory)
 
-Run tests related to your changes:
-```bash
-# Run all tests (or project-specific command)
-npm test
-pytest
-go test ./...
-```
+- Prefer explicit commands defined by the repository, in this priority:
+- `package.json` scripts (for example `test`, `lint`, `typecheck`, `check`, `build`, `format:check`, `format`).
+- `Makefile`/`Taskfile` verify targets (for example `test`, `lint`, `check`, `build`, `verify`).
+- Tool configs and project docs that define canonical commands.
+- Only use language-default commands (for example `go test ./...`, `pytest`) when project conventions clearly indicate them.
+- Do not claim verification is complete if command discovery was skipped.
 
-Don't commit if tests are failing.
+## Verification Evidence (Mandatory)
 
-### 3. Stage Thoughtfully
+- For each verification command, record:
+- Exact command executed.
+- Status (`pass` or `fail`).
+- Evidence (exit code and a key output line).
+- If a command cannot run because of environment constraints, report it as a blocker with exact error text.
 
-Stage files intentionally, not blindly:
+## Conventional Commit Rules
 
-```bash
-# Stage specific files
-git add path/to/file.ts
+- Format: `type(scope): subject`
+- Types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `chore`, `ci`, `build`.
+- Subject: imperative mood, lowercase, no trailing period, ideally under 50 chars.
+- Body: explain what and why (not how); wrap near 72 chars.
+- Footer: use for `BREAKING CHANGE:` and issue references like `Fixes #123`.
 
-# Stage portions of a file
-git add -p path/to/file.ts
+## Rules
 
-# Avoid staging everything blindly
-# git add .  # Be careful with this
-```
+- Always fix issues found by review and checks before reporting ready.
+- Do not claim a check passed unless it was run and evidenced.
+- Prefer repo-defined commands over guessed defaults.
+- Keep fixes minimal and aligned to existing conventions.
+- Do not rewrite history or run destructive git operations unless explicitly requested.
+- If the user asked only for pre-commit validation, stop before committing.
 
-## Writing Commit Messages
+## Output Format
 
-Follow the [Conventional Commits v1.0.0](https://www.conventionalcommits.org/en/v1.0.0/) specification.
+### Strengths
+[Specific positives observed in reviewed code]
 
-### Format
+### Issues Fixed
+[Issue list with file:line, why it mattered, and what was changed]
 
-```
-type(scope): subject
+### Remaining Issues
+[Only items blocked on product decisions or external constraints]
 
-body (optional)
+### Checks Run
+[Command-by-command status and key evidence]
 
-footer (optional)
-```
+### Commit
+[If created: commit hash and message; otherwise: "Not requested"]
 
-### Type
+### Assessment
 
-| Type | Use for |
-|------|---------|
-| `feat` | New feature |
-| `fix` | Bug fix |
-| `docs` | Documentation only |
-| `style` | Formatting, no code change |
-| `refactor` | Code change, no new feature or fix |
-| `perf` | Performance improvement |
-| `test` | Adding or fixing tests |
-| `chore` | Maintenance, dependencies |
-| `ci` | CI/CD changes |
-| `build` | Build system changes |
+**Ready to merge?** [Yes/No/With caveats]
 
-### Scope (Optional)
-The component or area affected: `feat(auth)`, `fix(api)`, `docs(readme)`
-
-### Subject
-- Imperative mood: "add" not "added" or "adds"
-- Lowercase, no period at end
-- Under 50 characters
-- Complete the sentence: "This commit will..."
-
-### Body (Optional)
-- Explain what and why, not how
-- Wrap at 72 characters
-- Blank line between subject and body
-
-### Footer (Optional)
-- Breaking changes: `BREAKING CHANGE: description`
-- Issue references: `Fixes #123`, `Closes #456`
-
-### Examples
-
-**Simple feature:**
-```
-feat(auth): add password reset flow
-```
-
-**Bug fix with context:**
-```
-fix(api): handle null response from payment provider
-
-The payment API sometimes returns null instead of an error object
-when the service is degraded. This caused unhandled exceptions.
-
-Fixes #234
-```
-
-**Breaking change:**
-```
-feat(api)!: change user endpoint response format
-
-BREAKING CHANGE: The /users endpoint now returns an object with
-a 'data' wrapper instead of a raw array. Update clients to
-access response.data instead of response directly.
-```
-
-**Refactoring:**
-```
-refactor(database): extract connection pooling to separate module
-
-No behavior change. Preparing for adding read replicas support.
-```
-
-## Commit Hygiene
-
-### Atomic Commits
-Each commit should be one logical change:
-- All related changes together
-- Unrelated changes in separate commits
-- Should build and pass tests independently
-
-### Commit Size
-- Small enough to review easily
-- Large enough to be a complete thought
-- Split "and" commits: "add X and fix Y" → two commits
-
-### What Not to Commit
-- Secrets, credentials, API keys
-- Generated files (unless intentional)
-- Build artifacts
-- IDE/editor settings (unless shared)
-- Large binary files
-
-## After Committing
-
-### Verify the Commit
-```bash
-# Check the commit looks correct
-git show
-
-# Check the log
-git log --oneline -5
-```
-
-### If You Made a Mistake
-
-**Amend the last commit** (before pushing):
-```bash
-git add forgotten-file.ts
-git commit --amend
-```
-
-**Fix commit message** (before pushing):
-```bash
-git commit --amend -m "correct message"
-```
-
-**Undo last commit** (keep changes):
-```bash
-git reset --soft HEAD~1
-```
-
-## Commit Checklist
-
-Before running `git commit`:
-
-- [ ] Changes reviewed (`git diff --staged`)
-- [ ] Tests pass
-- [ ] No debug code left
-- [ ] No sensitive data
-- [ ] Commit message follows format
-- [ ] Commit is atomic (one logical change)
-
-## References
-
-- [Conventional Commits Specification v1.0.0](https://www.conventionalcommits.org/en/v1.0.0/)
-- `shared/guidelines/git-workflow.md` for full git workflow
-
-## Reminders
-
-- Don't commit broken code to shared branches
-- Write messages for future readers (including future you)
-
+**Reasoning:** [1-2 sentences]

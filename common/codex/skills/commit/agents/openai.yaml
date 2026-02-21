@@ -1,4 +1,4 @@
 interface:
-  display_name: "Commit Guard"
-  short_description: "Review changes, run tests, and craft safe commits"
-  default_prompt: "Use $commit to review my unstaged changes, run tests, and create a conventional commit."
+  display_name: "Commit"
+  short_description: "Fix issues, verify checks, and create safe commits"
+  default_prompt: "Use $commit to review my changes, fix issues, run checks, and create a conventional commit when requested."
