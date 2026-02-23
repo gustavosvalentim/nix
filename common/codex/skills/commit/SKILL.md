@@ -20,6 +20,14 @@ Run a high-signal pre-commit workflow that finds and fixes issues, then creates 
 - Production Readiness: migration safety; backward compatibility; docs completeness.
 - YAGNI: avoid speculative or unused functionality.
 
+## Acceptance Criteria (Mandatory)
+
+- All discovered verification commands complete successfully (`pass`): tests, lint/static analysis, typecheck, format checks, build, and security/audit checks when defined by the repo.
+- Changed behavior in the diff is fully covered by automated tests; every non-trivial behavior change maps to at least one test case.
+- If existing tests do not adequately cover the diff, new or updated tests are added in the repository's native test framework before committing.
+- No check may be reported as passed without execution evidence.
+- Commit is blocked until all required checks and test-coverage expectations above are satisfied, unless the user explicitly approves proceeding with documented blockers.
+
 ## Workflow
 
 1. Inspect repo state and changed files (`git status --short`, `git diff`, `git diff --staged`).
@@ -28,11 +36,14 @@ Run a high-signal pre-commit workflow that finds and fixes issues, then creates 
 4. Build the check plan by discovering exact repo-native verification commands from project files.
 5. Run every discovered verification command in order: tests, lint/static, typecheck, dead-code, format check, build, audit.
 6. If no verification commands can be discovered, explicitly report that and ask the user whether to continue without verification.
-7. Fix all issues found. If a fix needs product input, stop and ask.
-8. Re-run affected checks and repeat until no issues remain.
-9. Stage intentionally (`git add <file>`, `git add -p`) and verify staged diff.
-10. Create a Conventional Commit message and run `git commit` without additional confirmation. Do not push.
-11. Verify commit with `git show` and `git log --oneline -5`.
+7. Evaluate test adequacy for the diff by mapping each changed behavior to existing automated tests.
+8. If coverage is insufficient for any changed behavior, add or update tests to close the gap before committing.
+9. Fix all issues found. If a fix needs product input, stop and ask.
+10. Re-run affected checks and repeat until no issues remain.
+11. Confirm all Acceptance Criteria are satisfied.
+12. Stage intentionally (`git add <file>`, `git add -p`) and verify staged diff.
+13. Create a Conventional Commit message and run `git commit` without additional confirmation. Do not push.
+14. Verify commit with `git show` and `git log --oneline -5`.
 
 ## Verification Command Discovery (Mandatory)
 
@@ -62,6 +73,7 @@ Run a high-signal pre-commit workflow that finds and fixes issues, then creates 
 ## Rules
 
 - Always fix issues found by review and checks before reporting ready.
+- Treat inadequate test coverage for changed behavior as a blocking issue that must be fixed by adding/updating tests.
 - Do not claim a check passed unless it was run and evidenced.
 - Prefer repo-defined commands over guessed defaults.
 - Keep fixes minimal and aligned to existing conventions.
