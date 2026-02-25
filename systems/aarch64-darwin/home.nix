@@ -37,11 +37,12 @@
     CODEX_SKILLS_DIR="$HOME/.codex/skills"
     mkdir -p "$CODEX_SKILLS_DIR"
 
-    rm -rf "$CODEX_SKILLS_DIR/commit" "$CODEX_SKILLS_DIR/planning" "$CODEX_SKILLS_DIR/write-skill"
+    rm -rf "$CODEX_SKILLS_DIR/commit" "$CODEX_SKILLS_DIR/planning" "$CODEX_SKILLS_DIR/write-skill" "$CODEX_SKILLS_DIR/task-orchestrator" "$CODEX_SKILLS_DIR/team-plan"
 
     cp -R ${../../common/codex/skills/commit} "$CODEX_SKILLS_DIR/commit"
     cp -R ${../../common/codex/skills/planning} "$CODEX_SKILLS_DIR/planning"
     cp -R ${../../common/codex/skills/write-skill} "$CODEX_SKILLS_DIR/write-skill"
+    cp -R ${../../common/codex/skills/team-plan} "$CODEX_SKILLS_DIR/team-plan"
   '';
 
   # Copy Codex config/prompts to avoid symlinks.

@@ -1,0 +1,7 @@
+interface:
+  display_name: "Team Plan"
+  short_description: "Production-grade planning with delegated execution"
+  brand_color: "#0F766E"
+  default_prompt: "Use $team-plan to plan and implement this feature with multi-agent execution, branch-per-task delivery, Conventional Commits (<type>(<scope>): <summary>), and detailed implementation/validation reporting."
+policy:
+  allow_implicit_invocation: true

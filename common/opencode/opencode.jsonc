@@ -1,8 +1,8 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "autoupdate": true,
-  "model": "openai/gpt-5.2-codex",
-  "small_model": "openai/gpt-5.2",
+  "model": "openai/gpt-5.3-codex",
+  "small_model": "openai/gpt-5.3-codex",
   "mcp": {
     "context7": {
       "command": [
@@ -11,55 +11,6 @@
         "@upstash/context7-mcp"
       ],
       "enabled": true,
-      "type": "local"
-    },
-
-    "filesystem": {
-      "command": [
-        "npx",
-        "-y",
-        "@modelcontextprotocol/server-filesystem",
-        "/Users/gsv/repos",
-        "/Users/gsv/.config/nix",
-        "/Users/gsv/.config/opencode"
-      ],
-      "enabled": true,
-      "type": "local"
-    },
-
-    "github": {
-      "command": [
-        "npx",
-        "-y",
-        "@modelcontextprotocol/server-github"
-      ],
-      "enabled": true,
-      "environment": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "{env:GITHUB_PAT}"
-      },
-      "type": "local"
-    },
-
-    "sequential-thinking": {
-      "command": [
-        "npx",
-        "-y",
-        "@modelcontextprotocol/server-sequential-thinking"
-      ],
-      "enabled": true,
-      "type": "local"
-    },
-
-    "kubernetes": {
-      "command": [
-        "npx",
-        "-y",
-        "kubernetes-mcp-server@latest"
-      ],
-      "enabled": true,
-      "environment": {
-        "KUBECONFIG": "/Users/gsv/.kube/config"
-      },
       "type": "local"
     }
   }
