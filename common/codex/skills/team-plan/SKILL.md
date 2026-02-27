@@ -96,6 +96,10 @@ Required behavior:
 - Use worker subagents for ready implementation tasks.
 - Use reviewer subagent before final completion.
 - Run workers in parallel up to `max_parallel` when dependencies allow.
+- Execute the full task graph in one run when in `plan-and-execute` mode.
+- After finishing any task (including `T1`), immediately continue with the next ready task(s).
+- Do not ask the user for "continue?" confirmation between tasks.
+- Only pause when a true blocker or required user decision is encountered.
 
 Scheduling:
 - Never run a blocked task.

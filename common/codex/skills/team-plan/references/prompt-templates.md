@@ -25,6 +25,8 @@ Implementation requirements:
 - Build blocker-aware DAG.
 - Schedule by critical_path_length then unblock_count.
 - Enforce branch-per-task with commit+push for every completed task.
+- Execute all ready tasks end-to-end in one run; do not stop after `T1`.
+- After each completed task, continue to the next ready task(s) without asking for confirmation.
 - Never use git worktrees.
 - Branch convention: <type>/<slug> (for example feat/fingerprint-tracking, fix/forbidden-error-on-stats).
 - Branch names must be <= 40 characters total.
@@ -39,6 +41,7 @@ Quality requirements:
 Question policy:
 - If a missing detail blocks implementation, stop and ask a focused question.
 - If implementation can proceed safely, state the assumption and continue.
+- Do not ask "continue?" between tasks when no blocker exists.
 
 Output must include:
 - detailed planning report (scope, constraints, assumptions, options, selected design, risks)

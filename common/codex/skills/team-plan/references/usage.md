@@ -43,6 +43,7 @@ For non-trivial work, runs should use multi-agent behavior:
 - explorer subagent for repo discovery/docs
 - worker subagents for ready tasks
 - reviewer subagent before completion
+- execute the whole task graph in one run without asking to continue after each task unless blocked
 
 If multi-agent is unavailable, the run should return a blocking escalation with setup guidance.
 
