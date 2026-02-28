@@ -50,6 +50,17 @@
 
 font-family = "JetBrainsMonoNL NFM Regular"
 
+keybind = ctrl+h=goto_split:left
+keybind = ctrl+j=goto_split:bottom
+keybind = ctrl+k=goto_split:top
+keybind = ctrl+l=goto_split:right
+
+auto-update-channel = tip
+
+macos-non-native-fullscreen = true
+# macos-option-as-alt = true
+scrollbar = never
+
 shell-integration-features = ssh-terminfo,ssh-env
 keybind = shift+enter=text:\x1b\r
 
@@ -63,5 +74,7 @@ clipboard-paste-protection = false
 shell-integration = zsh
 
 # Transparency
-background-opacity = 0.85
-background-blur-radius = 15
+# background-opacity = 0.85
+# background-blur-radius = 15
+
+window-inherit-font-size = false
