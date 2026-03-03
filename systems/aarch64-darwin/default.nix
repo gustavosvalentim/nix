@@ -10,6 +10,7 @@
       autohide = true;
       show-recents = false;
       orientation = "bottom";
+      tilesize = 42;
     };
 
     finder = {
