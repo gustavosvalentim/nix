@@ -11,6 +11,9 @@ fi
 
 declare -a ISSUES=()
 
+# This script is intentionally limited to deterministic document-readiness checks.
+# Semantic implementation readiness is evaluated by the agent in the spec loop.
+
 has_section() {
   local heading_regex="$1"
   awk -v re="$heading_regex" '
@@ -108,7 +111,7 @@ fi
 
 if [ "${#ISSUES[@]}" -gt 0 ]; then
   echo "NOT_READY"
-  printf 'Readiness issues:\n' >&2
+  printf 'Document readiness issues:\n' >&2
   for issue in "${ISSUES[@]}"; do
     printf ' - %s\n' "$issue" >&2
   done

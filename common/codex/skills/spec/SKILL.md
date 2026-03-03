@@ -8,7 +8,7 @@ description: Explicitly invoke with $spec to co-author a concrete SPEC.md throug
 ## Overview
 
 Use this skill only when the user explicitly invokes `$spec`.
-Co-author a concrete `SPEC.md` with the user, asking focused questions as gaps appear, and stop once readiness is confirmed.
+Co-author a concrete `SPEC.md` with the user, asking focused questions as gaps appear, and stop once both document readiness and semantic readiness are confirmed.
 
 ## When To Use
 
@@ -36,14 +36,16 @@ Co-author a concrete `SPEC.md` with the user, asking focused questions as gaps a
    - Prefer concrete choices and tradeoff-focused prompts over open-ended prompts.
 3. After each user response round:
    - Update the spec with decisions and assumptions.
-   - Run `scripts/spec_ready.sh <spec-path>`.
-4. If readiness is `NOT_READY`, ask the next batch of missing questions and repeat step 3.
+   - Run `scripts/spec_ready.sh <spec-path>` to evaluate document readiness.
+   - Run a semantic self-review against implementation readiness criteria (see Readiness Rules).
+   - Publish the semantic checklist using the required output format (see Semantic Checklist Format).
+4. If either readiness track is not ready, ask the next batch of missing questions and repeat step 3.
 5. Continue until one of these conditions is true:
-   - The script returns `READY`.
+   - The script returns `READY` and semantic self-review has no unresolved implementation-blocking gaps.
    - The user explicitly says `spec is ready` or `ship it` (force override).
 6. If force override is used, append a dated entry to `DECISIONS.md` that records:
    - The exact override phrase.
-   - Outstanding gaps.
+   - Outstanding document and semantic gaps.
    - The user's explicit instruction to proceed.
 7. Stop at spec handoff:
    - Provide a concise readiness summary.
@@ -56,27 +58,58 @@ Co-author a concrete `SPEC.md` with the user, asking focused questions as gaps a
 - Ask questions throughout spec construction, not only after a full draft is complete.
 - Each question must map to a specific missing readiness item or decision point.
 - If a reasonable default exists, propose it and ask for confirmation instead of asking broad questions.
+- If the script is `READY` but semantic gaps remain, continue the loop and ask targeted implementation-readiness questions.
 - Do not ask "Can I start implementation?" as the default close; end at "spec ready for development" unless asked to continue.
 
 ## Readiness Rules
 
-`scripts/spec_ready.sh` must enforce:
+Two readiness tracks are required:
 
-- Required sections exist and are concrete:
-  - Problem
-  - Non-goals
-  - Acceptance Criteria (contains MUST/SHOULD/MAY)
-  - Interfaces/examples (if applicable)
-  - Edge cases
-  - Constraints
-  - Definition of Done
-  - Test Plan
-- At least 1 happy-path example and 2 edge cases are documented.
-- Required sections do not contain placeholders such as `TBD`.
+1. Document readiness (`scripts/spec_ready.sh`):
+   - Required sections exist and are concrete:
+     - Problem
+     - Non-goals
+     - Acceptance Criteria (contains MUST/SHOULD/MAY)
+     - Interfaces/examples (if applicable)
+     - Edge cases
+     - Constraints
+     - Definition of Done
+     - Test Plan
+   - At least 1 happy-path example and 2 edge cases are documented.
+   - Required sections do not contain placeholders such as `TBD`.
+2. Semantic readiness (agent judgment, not script-only):
+   - Every `MUST` acceptance criterion is specific and testable.
+   - Interfaces, data flow, and expected behaviors are concrete enough to implement without high-risk ambiguity.
+   - Edge and failure cases are actionable, not generic placeholders.
+   - Constraints and non-goals are sufficient to prevent obvious scope drift.
+   - No unresolved implementation-blocking questions remain, unless explicitly accepted by user override.
+
+## Semantic Checklist Format
+
+Each review round must include a semantic checklist with one line per item and explicit evidence.
+
+Use this exact shape:
+
+```text
+Semantic checklist:
+- MUST criteria testable: pass|gap - <evidence>
+- Interfaces/data flow concrete: pass|gap - <evidence>
+- Edge/failure behavior actionable: pass|gap - <evidence>
+- Constraints/non-goals sufficient: pass|gap - <evidence>
+- Implementation blockers remaining: pass|gap - <evidence>
+```
+
+Rules:
+- Use only `pass` or `gap` states.
+- Evidence must reference concrete spec content or a specific missing detail.
+- If any implementation-critical item is `gap`, continue questioning.
+- A `gap` may be accepted only via explicit user override (recorded in `DECISIONS.md`).
 
 ## Script Usage Contract
 
-- Use `scripts/spec_ready.sh` for deterministic readiness status.
+- Use `scripts/spec_ready.sh` only for deterministic document-readiness status.
+- Do not treat `scripts/spec_ready.sh` as sufficient semantic proof that implementation can start.
+- Semantic readiness must be evaluated explicitly by the agent each round.
 - Use `scripts/validate_skill.sh` when validating the skill itself.
 
 Do not replace these scripted checks with improvised manual logic.
