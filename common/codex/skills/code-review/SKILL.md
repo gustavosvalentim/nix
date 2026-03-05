@@ -61,26 +61,37 @@ If context is missing, state assumptions and continue with a best-effort review.
 
 ## Output Contract (Mandatory)
 
-Return findings in this exact shape:
+Return the review in this exact Markdown structure:
 
-```yaml
-summary:
-  overall_risk: critical|high|medium|low
-  files_reviewed: <number>
-  findings_count: <number>
-findings:
-  - issue: <short title>
-    where: <absolute file path + line or symbol>
-    why: <why this is a problem and likely impact>
-    severity: critical|high|medium|low
-    suggestion: <concrete fix or mitigation>
-test_coverage:
-  business_logic_tests_present: yes|partial|no
-  missing_tests:
-    - <specific missing case>
+```md
+### Summary
+- Overall Risk: `critical|high|medium|low`
+- Files Reviewed: `<number>`
+- Findings Count: `<number>`
+
+### Findings
+For each finding:
+
+#### [<severity>] <issue title>
+- Where: `<absolute file path + line or symbol>`
+- Why: `<why this is a problem and likely impact>`
+- Suggestion: `<concrete fix or mitigation>`
+
+### Test Coverage
+- Business Logic Tests Present: `yes|partial|no`
+- Missing Tests:
+- `<specific missing case>`
+- `<specific missing case>`
 ```
 
-If there are no findings, return `findings: []` and still complete `summary` and `test_coverage`.
+If there are no findings, write:
+
+```md
+### Findings
+No findings.
+```
+
+Always include `Summary` and `Test Coverage`, even when there are no findings.
 
 ## Severity Guidance
 

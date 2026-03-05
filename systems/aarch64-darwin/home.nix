@@ -46,15 +46,6 @@
     cp -R ${../../common/codex/skills/spec} "$CODEX_SKILLS_DIR/spec"
   '';
 
-  # Keep global agent-compatible skill path populated with concrete files.
-  home.activation.syncGlobalAgentSkills = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    AGENT_SKILLS_DIR="$HOME/.agents/skills"
-    mkdir -p "$AGENT_SKILLS_DIR"
-
-    rm -rf "$AGENT_SKILLS_DIR/spec"
-    cp -R ${../../common/codex/skills/spec} "$AGENT_SKILLS_DIR/spec"
-  '';
-
   # Copy Codex config/prompts to avoid symlinks.
   home.activation.syncCodexConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     CODEX_DIR="$HOME/.codex"
