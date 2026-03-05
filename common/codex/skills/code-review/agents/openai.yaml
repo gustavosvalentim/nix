@@ -1,0 +1,4 @@
+interface:
+  display_name: "Code Review"
+  short_description: "Risk-focused code reviews with structured findings"
+  default_prompt: "Use $code-review to review this code for security, correctness, exception handling, undefined behavior, incomplete logic, code smells, and business-logic test coverage."
