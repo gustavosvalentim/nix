@@ -8,6 +8,13 @@ Use this reference to justify review priorities and severity decisions.
 - Keep findings specific and actionable with exact locations.
 - Prioritize high-risk security and reliability defects first.
 - Require test evidence for changed business logic and failure paths.
+- Use explicit checklists to improve consistency and reduce missed findings.
+
+## Review Strategy
+
+- Prefer diff-based review for change risk, then inspect adjacent code paths where changed behavior depends on unchanged callers/callees.
+- Use data-flow analysis across trust boundaries (sources -> validation -> sink).
+- Include threat-based and business-logic review, not only syntactic checks.
 
 ## Security Review Focus
 
@@ -33,6 +40,12 @@ Use this reference to justify review priorities and severity decisions.
 - Error/failure handling paths
 - Security-sensitive decision points
 
+## Prompt Quality Loop
+
+- Keep instructions explicit but concise; over-prompting can reduce model quality.
+- Use a stable output template and a mandatory checklist to reduce omission variance.
+- Maintain evaluation snippets and compare quality over time when prompt/skill text changes.
+
 ## Severity Calibration
 
 - For security findings, calibrate impact using CVSS concepts (exploitability + impact).
@@ -49,6 +62,10 @@ Use this reference to justify review priorities and severity decisions.
   - https://owasp.org/www-project-web-security-testing-guide/
 - OWASP Code Review Guide
   - https://owasp.org/www-project-code-review-guide/
+- OWASP Secure Code Review Cheat Sheet
+  - https://cheatsheetseries.owasp.org/cheatsheets/Secure_Code_Review_Cheat_Sheet.html
+- OWASP ASVS Project
+  - https://owasp.org/www-project-application-security-verification-standard/
 - NIST Secure Software Development Framework (SP 800-218)
   - https://csrc.nist.gov/pubs/sp/800/218/final
 - CWE Top 25 Most Dangerous Software Weaknesses
@@ -61,3 +78,9 @@ Use this reference to justify review priorities and severity decisions.
   - https://wiki.sei.cmu.edu/confluence/display/cplusplus/ERR51-CPP.+Handle+all+exceptions
 - FIRST CVSS v4.0 Specification
   - https://www.first.org/cvss/specification-document
+- OpenAI GPT-5 Codex Prompting Guide
+  - https://cookbook.openai.com/examples/gpt-5-codex_prompting_guide
+- OpenAI Prompt Optimization Guide
+  - https://cookbook.openai.com/examples/optimize_prompts
+- Anthropic Prompt Engineering Overview
+  - https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview
