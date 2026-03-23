@@ -1,4 +1,0 @@
-interface:
-  display_name: "Commit"
-  short_description: "Fix issues, verify checks, and create safe commits"
-  default_prompt: "Use $commit to review my changes, fix issues, run checks, and create a conventional commit when requested."

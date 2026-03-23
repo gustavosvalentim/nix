@@ -48,7 +48,7 @@
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
 
-font-family = "JetBrainsMonoNL NFM Regular"
+font-family = "JetBrainsMonoNL Nerd Font Mono"
 
 keybind = ctrl+h=goto_split:left
 keybind = ctrl+j=goto_split:bottom

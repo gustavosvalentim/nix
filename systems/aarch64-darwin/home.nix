@@ -31,21 +31,6 @@
     fi
   '';
 
-  # Codex does not reliably discover user skills when SKILL.md/openai.yaml are symlinks.
-  # Keep source of truth in nix and copy concrete files into ~/.codex/skills at activation.
-  home.activation.syncCodexSkills = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    # CODEX_SKILLS_DIR="$HOME/.codex/skills"
-    # mkdir -p "$CODEX_SKILLS_DIR"
-    #
-    # rm -rf "$CODEX_SKILLS_DIR/commit" "$CODEX_SKILLS_DIR/planning" "$CODEX_SKILLS_DIR/write-skill" "$CODEX_SKILLS_DIR/task-orchestrator" "$CODEX_SKILLS_DIR/team-plan" "$CODEX_SKILLS_DIR/spec"
-    #
-    # cp -R ${../../common/codex/skills/commit} "$CODEX_SKILLS_DIR/commit"
-    # cp -R ${../../common/codex/skills/planning} "$CODEX_SKILLS_DIR/planning"
-    # cp -R ${../../common/codex/skills/write-skill} "$CODEX_SKILLS_DIR/write-skill"
-    # cp -R ${../../common/codex/skills/team-plan} "$CODEX_SKILLS_DIR/team-plan"
-    # cp -R ${../../common/codex/skills/spec} "$CODEX_SKILLS_DIR/spec"
-  '';
-
   # Copy Codex config/prompts to avoid symlinks.
   home.activation.syncCodexConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     CODEX_DIR="$HOME/.codex"
@@ -53,10 +38,6 @@
 
     rm -f "$CODEX_DIR/config.toml"
     cp ${../../common/codex/config.toml} "$CODEX_DIR/config.toml"
-
-    rm -rf "$CODEX_DIR/prompts"
-    mkdir -p "$CODEX_DIR/prompts"
-    cp -R ${../../common/codex/prompts}/. "$CODEX_DIR/prompts"
   '';
 
   home.file."ghostty-config" = {
@@ -81,30 +62,6 @@
     target = "/Users/${username}/.config/opencode/opencode.jsonc";
     source = ../../common/opencode/opencode.jsonc;
   };
-
-  # home.file."opencode-skill-skill-creator" = {
-  #   target = "/Users/${username}/.config/opencode/skills/skill-creator";
-  #   source = ../../common/opencode/skills/skill-creator;
-  #   recursive = true;
-  # };
-
-  # home.file."opencode-skill-commit" = {
-  #   target = "/Users/${username}/.config/opencode/skills/commit";
-  #   source = ../../common/codex/skills/commit;
-  #   recursive = true;
-  # };
-
-  # home.file."opencode-skill-planning" = {
-  #   target = "/Users/${username}/.config/opencode/skills/planning";
-  #   source = ../../common/codex/skills/planning;
-  #   recursive = true;
-  # };
-
-  # home.file."opencode-skill-write-skill" = {
-  #   target = "/Users/${username}/.config/opencode/skills/write-skill";
-  #   source = ../../common/codex/skills/write-skill;
-  #   recursive = true;
-  # };
 
   programs =
     let packages = import ../../common/packages.nix { inherit pkgs username config; };

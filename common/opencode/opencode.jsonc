@@ -3,6 +3,18 @@
   "autoupdate": true,
   "model": "openai/gpt-5.3-codex",
   "small_model": "openai/gpt-5.3-codex",
+  "provider": {
+    "ollama": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Ollama Cloud",
+      "options": {
+        "baseURL": "https://ollama.com/v1"
+      }
+    },
+    "openai": {
+      "name": "OpenAI"
+    }
+  },
   "mcp": {
     "context7": {
       "command": [
