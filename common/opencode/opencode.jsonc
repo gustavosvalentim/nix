@@ -10,9 +10,6 @@
       "options": {
         "baseURL": "https://ollama.com/v1"
       }
-    },
-    "openai": {
-      "name": "OpenAI"
     }
   },
   "mcp": {
