@@ -14,6 +14,7 @@
       "kustomize"
       "kubectx"
       "k9s"
+      "worktrunk"
     ];
 
     casks = [

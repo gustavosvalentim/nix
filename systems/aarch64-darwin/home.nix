@@ -20,6 +20,10 @@
     packages = import ../../common/packages.nix { inherit pkgs username config; };
     in packages.darwinPackages;
 
+  programs =
+    let packages = import ../../common/packages.nix { inherit pkgs username config; };
+    in packages.programs;
+
   fonts.fontconfig.enable = true;
 
   home.activation.cloneNeovimConfig = lib.hm.dag.entryAfter [ "writeBoundary" "installPackages" "programs.git" ] ''
@@ -63,7 +67,11 @@
     source = ../../common/opencode/opencode.jsonc;
   };
 
-  programs =
-    let packages = import ../../common/packages.nix { inherit pkgs username config; };
-    in packages.programs;
+  home.activation.worktrunkConfigure = lib.hm.dag.entryAfter [ "writeBoundary" "installPackages" ] ''
+    /opt/homebrew/bin/wt config shell install
+  '';
+
+  home.activation.ghDashInstall = lib.hm.dag.entryAfter [ "writeBoundary" "installPackages" ] ''
+    ${pkgs.gh}/bin/gh extension install dlvhdr/gh-dash
+  '';
 }
