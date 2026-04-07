@@ -9,7 +9,7 @@
       "cowsay"
       "asdf"
       "oven-sh/bun/bun"
-      "opencode"
+      "anomalyco/tap/opencode"
       "kubectl"
       "kustomize"
       "kubectx"
