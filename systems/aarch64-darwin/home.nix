@@ -57,11 +57,6 @@
     source = ../../common/macos/DefaultKeyBinding.dict;
   };
 
-  home.file."opencode-agent-md" = {
-    target = "/Users/${username}/.config/opencode/AGENTS.md";
-    source = ../../common/opencode/AGENTS.md;
-  };
-
   home.file."opencode-config" = {
     target = "/Users/${username}/.config/opencode/opencode.jsonc";
     source = ../../common/opencode/opencode.jsonc;
