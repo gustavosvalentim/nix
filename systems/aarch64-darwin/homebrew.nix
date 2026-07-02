@@ -3,7 +3,10 @@
 {
   homebrew = {
     enable = true;
-    taps = [ ];
+    taps = [
+      "oven-sh/bun"
+      "anomalyco/tap"
+    ];
 
     brews = [
       "cowsay"
@@ -37,5 +40,9 @@
       # Keep manual brews/casks; "zap" removes items not declared here.
       cleanup = "none";
     };
+
+    extraConfig = ''
+      ENV["HOMEBREW_NO_REQUIRE_TAP_TRUST"] = "1"
+    '';
   };
 }
