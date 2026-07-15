@@ -11,6 +11,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    herdr = {
+      url = "github:ogulcancelik/herdr/v0.7.3";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs@{ self, nix-darwin, nixpkgs, home-manager, ... }:
@@ -28,7 +32,7 @@
             home-manager.darwinModules.home-manager
             {
               home-manager = {
-                extraSpecialArgs = { inherit username; };
+                extraSpecialArgs = { inherit inputs username; };
                 useGlobalPkgs = true;
                 useUserPackages = true;
                 users.gsv = import ./systems/aarch64-darwin/home.nix;

@@ -1,4 +1,4 @@
-{ pkgs, lib, username, config, ... }:
+{ pkgs, lib, inputs, username, config, ... }:
 
 {
   # this is internal compatibility configuration
@@ -18,7 +18,9 @@
 
   home.packages = let
     packages = import ../../common/packages.nix { inherit pkgs username config; };
-    in packages.darwinPackages;
+    in packages.darwinPackages ++ [
+      inputs.herdr.packages.${pkgs.stdenv.hostPlatform.system}.default
+    ];
 
   programs =
     let packages = import ../../common/packages.nix { inherit pkgs username config; };
@@ -60,6 +62,12 @@
   home.file."opencode-config" = {
     target = "/Users/${username}/.config/opencode/opencode.jsonc";
     source = ../../common/opencode/opencode.jsonc;
+  };
+
+  home.file."herdr-config" = {
+    target = "/Users/${username}/.config/herdr/config.toml";
+    source = ../../common/herdr/config.toml;
+    force = true;
   };
 
   home.activation.worktrunkConfigure = lib.hm.dag.entryAfter [ "writeBoundary" "installPackages" ] ''
