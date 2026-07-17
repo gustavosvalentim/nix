@@ -1,5 +1,10 @@
-model = "gpt-5.4"
-model_reasoning_effort = "xhigh"
+model = "gpt-5.5-terra"
+model_reasoning_effort = "medium"
+model_verbosity = "low"
+personality = "pragmatic"
+
+approval_policy = "on-request"
+approvals_reviewer = "auto_review"
 
 [features]
 multi_agent = true
