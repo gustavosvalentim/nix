@@ -11,7 +11,3 @@ multi_agent = true
 
 [agents]
 max_threads = 8
-
-[mcp_servers.context7]
-command = "npx"
-args = ["-y", "@upstash/context7-mcp"]
