@@ -74,7 +74,4 @@
     /opt/homebrew/bin/wt config shell install
   '';
 
-  home.activation.ghDashInstall = lib.hm.dag.entryAfter [ "writeBoundary" "installPackages" ] ''
-    ${pkgs.gh}/bin/gh extension install dlvhdr/gh-dash
-  '';
 }
