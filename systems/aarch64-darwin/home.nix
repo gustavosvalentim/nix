@@ -1,6 +1,10 @@
 { pkgs, lib, inputs, username, config, ... }:
 
 {
+  imports = [
+    inputs.hunk.homeManagerModules.default
+  ];
+
   # this is internal compatibility configuration
   # for home-manager, don't change this!
   home.stateVersion = "23.05";

@@ -25,37 +25,13 @@
     # Let home-manager install and manage itself.
     home-manager.enable = true;
 
-    delta = {
+    hunk = {
       enable = true;
       enableGitIntegration = true;
-      options = {
-        navigate = true;
-        dark = true;
-        lineNumbers = true;
-        side-by-side = true;
-        features = "unobtrusive-line-numbers decorations";
-        interactive = {
-          diffFilter = "delta --color-only";
-        };
-        merge = {
-          conflitStyle = "zdiff3";
-        };
-        decorations = {
-          commit-decoration-style = "bold yellow box ul";
-          file-style = "bold yellow ul";
-          file-decoration-style = "none";
-          hunk-header-decoration-style = "yellow box";
-        };
-        unobstrusive-line-numbers = {
-          line-numbers = "true";
-          line-numbers-minus-style = "#444444";
-          line-numbers-zero-style = "#444444";
-          line-numbers-plus-style = "#444444";
-          line-numbers-left-format = "{nm:>4}┊";
-          line-numbers-right-format = "{np:>4}│";
-          line-numbers-left-style = "blue";
-          line-numbers-right-style = "blue";
-        };
+      settings = {
+        theme = "github-dark-default";
+        mode = "split";
+        line_numbers = true;
       };
     };
 
