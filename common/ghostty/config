@@ -78,3 +78,5 @@ shell-integration = zsh
 # background-blur-radius = 15
 
 window-inherit-font-size = false
+
+keybind = shift+enter=text:\n
