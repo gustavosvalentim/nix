@@ -74,8 +74,8 @@
     force = true;
   };
 
-  home.activation.worktrunkConfigure = lib.hm.dag.entryAfter [ "writeBoundary" "installPackages" ] ''
-    /opt/homebrew/bin/wt config shell install
-  '';
+  # home.activation.worktrunkConfigure = lib.hm.dag.entryAfter [ "writeBoundary" "installPackages" ] ''
+  #   /opt/homebrew/bin/wt config shell install
+  # '';
 
 }
