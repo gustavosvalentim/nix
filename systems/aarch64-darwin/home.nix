@@ -61,6 +61,7 @@
 
     cp ${../../common/pi/settings.json} "$PI_DIR/settings.json"
     cp ${../../common/pi/extensions/custom-statusline.ts} "$PI_DIR/extensions/custom-statusline.ts"
+    cp ${../../common/pi/extensions/whimsical.ts} "$PI_DIR/extensions/whimsical.ts"
     cp ${../../common/pi/extensions/tsconfig.json} "$PI_DIR/extensions/tsconfig.json"
     cp ${../../common/pi/extensions/load-env/index.ts} "$PI_DIR/extensions/load-env/index.ts"
     cp ${../../common/pi/extensions/load-env/package.json} "$PI_DIR/extensions/load-env/package.json"
