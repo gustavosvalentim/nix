@@ -50,6 +50,25 @@
     cp ${../../common/codex/config.toml} "$CODEX_DIR/config.toml"
   '';
 
+  # Pi mutates settings.json, so deploy managed configuration by copying rather
+  # than symlinking it from the Nix store. Credentials, sessions, packages, and
+  # other runtime state in ~/.pi remain unmanaged.
+  home.activation.syncPiConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    PI_DIR="$HOME/.pi/agent"
+    mkdir -p "$PI_DIR/extensions/load-env" \
+      "$PI_DIR/skills/gitting-gud" \
+      "$PI_DIR/skills/stupid"
+
+    cp ${../../common/pi/settings.json} "$PI_DIR/settings.json"
+    cp ${../../common/pi/extensions/custom-statusline.ts} "$PI_DIR/extensions/custom-statusline.ts"
+    cp ${../../common/pi/extensions/tsconfig.json} "$PI_DIR/extensions/tsconfig.json"
+    cp ${../../common/pi/extensions/load-env/index.ts} "$PI_DIR/extensions/load-env/index.ts"
+    cp ${../../common/pi/extensions/load-env/package.json} "$PI_DIR/extensions/load-env/package.json"
+    cp ${../../common/pi/extensions/load-env/README.md} "$PI_DIR/extensions/load-env/README.md"
+    cp ${../../common/pi/skills/gitting-gud/SKILL.md} "$PI_DIR/skills/gitting-gud/SKILL.md"
+    cp ${../../common/pi/skills/stupid/SKILL.md} "$PI_DIR/skills/stupid/SKILL.md"
+  '';
+
   home.file."ghostty-config" = {
     target = "Library/Application Support/com.mitchellh.ghostty/config";
     source = ../../common/ghostty/config;

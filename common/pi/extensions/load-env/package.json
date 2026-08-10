@@ -1,0 +1,10 @@
+{
+  "name": "pi-load-env",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Load ~/.pi/.env into the Pi process environment.",
+  "type": "module",
+  "pi": {
+    "extensions": ["./index.ts"]
+  }
+}
