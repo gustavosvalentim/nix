@@ -32,6 +32,7 @@
       "1password-cli"
       "codex"
       "beekeeper-studio"
+      "rectangle"
     ];
 
     onActivation = {
