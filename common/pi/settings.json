@@ -6,7 +6,8 @@
   "defaultThinkingLevel": "medium",
   "packages": [
     "npm:@narumitw/pi-goal",
-    "npm:@narumitw/pi-firecrawl"
+    "npm:@narumitw/pi-firecrawl",
+    "npm:@upstash/context7-pi"
   ],
   "hideThinkingBlock": true,
   "enabledModels": [
