@@ -7,7 +7,8 @@
   "packages": [
     "npm:@narumitw/pi-goal",
     "npm:@narumitw/pi-firecrawl",
-    "npm:@upstash/context7-pi"
+    "npm:@upstash/context7-pi",
+    "npm:@plannotator/pi-extension"
   ],
   "hideThinkingBlock": true,
   "enabledModels": [
