@@ -18,6 +18,7 @@
       "kubectx"
       "k9s"
       "worktrunk"
+      "pi-coding-agent"
     ];
 
     casks = [
