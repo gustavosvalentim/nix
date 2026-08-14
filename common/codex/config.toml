@@ -8,6 +8,10 @@ approvals_reviewer = "auto_review"
 
 [features]
 multi_agent = true
+rmcp_client = true
 
 [agents]
 max_threads = 8
+
+[mcp_servers.linear]
+url = "https://mcp.linear.app/mcp"

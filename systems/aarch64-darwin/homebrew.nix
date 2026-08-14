@@ -6,6 +6,12 @@
     taps = [
       "oven-sh/bun"
       "anomalyco/tap"
+
+      {
+        name = "jundot/omlx";
+        clone_target = "git@github.com:jundot/omlx.git";
+        force_auto_update = true;
+      }
     ];
 
     brews = [
@@ -19,6 +25,7 @@
       "k9s"
       "worktrunk"
       "pi-coding-agent"
+      "jundot/omlx/omlx"
     ];
 
     casks = [

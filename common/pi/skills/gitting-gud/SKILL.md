@@ -7,9 +7,15 @@ description: Instructions for how to commit and push code to a git repository. U
 
 This is a guide for how to commit and push code, or create a PR, to a git repository.
 
-## Commit
+## Naming conventions
 
-- Follow the [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) specification.
+- Commits: Follow the [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) specification.
+- Branches: Use `kebab-case` for branch names. Prefix with `feat/`, `fix/`, `chore/`, `refactor/`, `docs/`. After prefix, if there is an issue related to the branch, use the issue number, e.g. `feat/test-123`.
+
+## Commits
+
+- Commit messages should be written in the imperative mood.
+- Commit messages should be written in present tense.
 
 ## Push
 

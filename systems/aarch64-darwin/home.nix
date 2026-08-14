@@ -41,13 +41,20 @@
     fi
   '';
 
-  # Copy Codex config/prompts to avoid symlinks.
+  # Copy Codex config and shared skills to avoid symlinks.
   home.activation.syncCodexConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     CODEX_DIR="$HOME/.codex"
-    mkdir -p "$CODEX_DIR"
+    SKILLS="grill-me grill-with-docs grilling handoff herdr"
+    mkdir -p "$CODEX_DIR/skills"
 
     rm -f "$CODEX_DIR/config.toml"
     cp ${../../common/codex/config.toml} "$CODEX_DIR/config.toml"
+
+    for skill in $SKILLS; do
+      rm -rf "$CODEX_DIR/skills/$skill"
+      cp -R ${../../common/pi/skills}/$skill "$CODEX_DIR/skills/$skill"
+      chmod -R u+w "$CODEX_DIR/skills/$skill"
+    done
   '';
 
   # Pi mutates settings.json, so deploy managed configuration by copying rather
@@ -55,10 +62,14 @@
   # other runtime state in ~/.pi remain unmanaged.
   home.activation.syncPiConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     PI_DIR="$HOME/.pi/agent"
-    mkdir -p "$PI_DIR/extensions/load-env" \
-      "$PI_DIR/skills/gitting-gud" \
-      "$PI_DIR/skills/stupid"
+    SKILLS="gitting-gud stupid worktrunk grill-me grill-with-docs grilling handoff herdr domain-modeling"
+    mkdir -p "$PI_DIR/extensions/load-env" "$PI_DIR/skills"
 
+    if [ -e "$PI_DIR/extensions/pi-skill-toggle" ]; then
+      chmod -R u+w "$PI_DIR/extensions/pi-skill-toggle"
+      rm -rf "$PI_DIR/extensions/pi-skill-toggle"
+    fi
+    cp -R ${../../common/pi/extensions/pi-skill-toggle} "$PI_DIR/extensions/pi-skill-toggle"
     cp ${../../common/pi/settings.json} "$PI_DIR/settings.json"
     cp ${../../common/pi/extensions/custom-statusline.ts} "$PI_DIR/extensions/custom-statusline.ts"
     cp ${../../common/pi/extensions/whimsical.ts} "$PI_DIR/extensions/whimsical.ts"
@@ -66,8 +77,12 @@
     cp ${../../common/pi/extensions/load-env/index.ts} "$PI_DIR/extensions/load-env/index.ts"
     cp ${../../common/pi/extensions/load-env/package.json} "$PI_DIR/extensions/load-env/package.json"
     cp ${../../common/pi/extensions/load-env/README.md} "$PI_DIR/extensions/load-env/README.md"
-    cp ${../../common/pi/skills/gitting-gud/SKILL.md} "$PI_DIR/skills/gitting-gud/SKILL.md"
-    cp ${../../common/pi/skills/stupid/SKILL.md} "$PI_DIR/skills/stupid/SKILL.md"
+
+    for skill in $SKILLS; do
+      rm -rf "$PI_DIR/skills/$skill"
+      cp -R ${../../common/pi/skills}/$skill "$PI_DIR/skills/$skill"
+      chmod -R u+w "$PI_DIR/skills/$skill"
+    done
   '';
 
   home.file."ghostty-config" = {
