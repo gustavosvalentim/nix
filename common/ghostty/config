@@ -66,7 +66,7 @@ keybind = shift+enter=text:\x1b\r
 
 bell-features = "no-audio"
 
-theme = Monokai Remastered
+theme = luna
 
 gtk-tabs-location = hidden
 scrollback-limit = 10_000

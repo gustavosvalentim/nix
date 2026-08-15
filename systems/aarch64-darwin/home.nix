@@ -91,6 +91,11 @@
     force = true;
   };
 
+  home.file."ghostty-luna-theme" = {
+    target = ".config/ghostty/themes/luna";
+    source = "${inputs.luna}/extras/ghostty/luna";
+  };
+
   # Workaround for muting ghostty when resizing split windows
   # https://github.com/ghostty-org/ghostty/discussions/5521#discussioncomment-12306028
   home.file."macos-default-keybinding" = {
