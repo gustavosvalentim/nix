@@ -1,7 +1,7 @@
 ---
 name: worktrunk
 description: Instructions for how to use worktrunk, a tool for managing worktrees. Use when the user explicitly ask for you to create, remove or list worktrees.
-disable-model-invocation: false
+disable-model-invocation: true
 ---
 
 # Worktrunk
