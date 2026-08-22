@@ -17,6 +17,7 @@
 
     brews = [
       "asdf"
+      "awscli"
       "cowsay"
       "jundot/omlx/omlx"
       "k9s"
