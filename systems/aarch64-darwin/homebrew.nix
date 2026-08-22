@@ -4,8 +4,9 @@
   homebrew = {
     enable = true;
     taps = [
-      "oven-sh/bun"
       "anomalyco/tap"
+      "hashicorp/tap"
+      "oven-sh/bun"
 
       {
         name = "jundot/omlx";
@@ -15,32 +16,32 @@
     ];
 
     brews = [
-      "cowsay"
       "asdf"
-      "oven-sh/bun/bun"
-      "anomalyco/tap/opencode"
-      "kubectl"
-      "kustomize"
-      "kubectx"
-      "k9s"
-      "worktrunk"
-      "pi-coding-agent"
+      "cowsay"
       "jundot/omlx/omlx"
+      "k9s"
+      "kubectl"
+      "kubectx"
+      "kustomize"
+      "oven-sh/bun/bun"
+      "pi-coding-agent"
+      "worktrunk"
     ];
 
     casks = [
-      "ghostty"
-      "orbstack"
-      "zen"
-      "spotify"
-      "vlc"
-      "obsidian"
-      "clipy"
       "1password"
       "1password-cli"
-      "codex"
       "beekeeper-studio"
+      "clipy"
+      "codex"
+      "hashicorp/tap/hashicorp-vagrant"
+      "ghostty"
+      "obsidian"
+      "orbstack"
       "rectangle"
+      "spotify"
+      "vlc"
+      "zen"
     ];
 
     onActivation = {

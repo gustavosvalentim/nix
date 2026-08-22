@@ -2,14 +2,15 @@
 
 {
   darwinPackages = with pkgs; [
+    ansible
     bat
-    ripgrep
-    tree
+    claude-code
     golangci-lint
     gopls
-    nodejs
-    claude-code
     jq
+    nodejs
+    ripgrep
+    tree
     uv
     zoxide
 
@@ -18,7 +19,6 @@
     nerd-fonts.fira-code
     nerd-fonts.iosevka
     nerd-fonts.jetbrains-mono
-
   ];
 
   programs = {
