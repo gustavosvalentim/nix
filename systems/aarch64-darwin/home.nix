@@ -86,6 +86,14 @@
     done
   '';
 
+  # Plannotator saves UI preferences to config.json, so keep it writable.
+  # Rebuilds restore managed settings; history and drafts remain unmanaged.
+  home.activation.syncPlannotatorConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    PLANNOTATOR_DIR="${config.xdg.dataHome}/plannotator"
+    run mkdir -p "$PLANNOTATOR_DIR"
+    run ${pkgs.coreutils}/bin/install -m 644 ${../../common/plannotator/config.json} "$PLANNOTATOR_DIR/config.json"
+  '';
+
   home.file."ghostty-config" = {
     target = "Library/Application Support/com.mitchellh.ghostty/config";
     source = ../../common/ghostty/config;
