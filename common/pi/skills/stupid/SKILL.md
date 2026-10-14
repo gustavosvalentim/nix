@@ -1,5 +1,6 @@
 ---
 name: stupid
+disable-model-invocation: true
 description: A guide on how to build simple, maintainable, and correct code. Use when the user asks you to implement a task, change the code, fix a bug, or refactor code.
 ---
 

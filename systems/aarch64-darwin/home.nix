@@ -44,7 +44,7 @@
   # Copy Codex config and shared skills to avoid symlinks.
   home.activation.syncCodexConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     CODEX_DIR="$HOME/.codex"
-    SKILLS="gitting-gud worktrunk domain-modeling grill-me grill-with-docs grilling handoff herdr"
+    SKILLS="gitting-gud stupid worktrunk domain-modeling grill-me grill-with-docs grilling handoff herdr"
     mkdir -p "$CODEX_DIR/skills"
 
     rm -f "$CODEX_DIR/config.toml"
