@@ -71,6 +71,7 @@
     fi
     cp -R ${../../common/pi/extensions/pi-skill-toggle} "$PI_DIR/extensions/pi-skill-toggle"
     cp ${../../common/pi/settings.json} "$PI_DIR/settings.json"
+    run ${pkgs.coreutils}/bin/install -m 644 ${../../common/pi/mcp.json} "$PI_DIR/mcp.json"
     cp ${../../common/pi/extensions/custom-statusline.ts} "$PI_DIR/extensions/custom-statusline.ts"
     cp ${../../common/pi/extensions/save-md.ts} "$PI_DIR/extensions/save-md.ts"
     cp ${../../common/pi/extensions/whimsical.ts} "$PI_DIR/extensions/whimsical.ts"
