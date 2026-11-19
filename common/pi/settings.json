@@ -7,7 +7,8 @@
   "packages": [
     "npm:@upstash/context7-pi",
     "npm:@plannotator/pi-extension",
-    "npm:pi-exa"
+    "npm:pi-exa",
+    "npm:pi-compact-tools"
   ],
   "hideThinkingBlock": true,
   "enabledModels": [
