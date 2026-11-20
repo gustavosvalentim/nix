@@ -8,22 +8,25 @@
 [theme]
 name = "terminal"
 
+# Jellybeans dark palette from jellybeans.nvim (lua/jellybeans/palettes/jellybeans.lua).
+# Herdr applies these overrides on top of the terminal base theme.
 [theme.custom]
-panel_bg = "#060606"
-surface0 = "#060606"
-surface1 = "#1c1c1c"
-surface_dim = "#060606"
-overlay0 = "#888888"
-overlay1 = "#a8a8a8"
-text = "#e4e4e8"
-subtext0 = "#c7c7c7"
-mauve = "#c4a8d6"
-green = "#6fbe80"
-yellow = "#d9a35a"
-red = "#e08585"
-blue = "#75a1c7"
-teal = "#75a1c7"
-peach = "#c2916a"
+accent = "#8197bf" # ship_cove
+panel_bg = "#151515" # background
+surface0 = "#1c1c1c" # grey_one
+surface1 = "#333333" # grey_three
+surface_dim = "#101010" # cod_grey
+overlay0 = "#606060" # scorpion
+overlay1 = "#888888" # grey
+text = "#e8e8d3" # foreground
+subtext0 = "#c7c7c7" # silver
+mauve = "#c6b6ee" # biloba_flower
+green = "#99ad6a" # green_smoke
+yellow = "#fad07a" # goldenrod
+red = "#d74545" # error
+blue = "#8197bf" # ship_cove
+teal = "#8fbfdc" # morning_glory
+peach = "#d98870" # raw_sienna
 
 [terminal]
 # Executable used for new interactive panes.
