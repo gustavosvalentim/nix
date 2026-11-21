@@ -68,12 +68,12 @@
         nixclear = "nix-collect-garbage -d";
         nixconfig = "$EDITOR $HOME/.config/nix";
         vimconfig = "$EDITOR $HOME/.config/nvim";
-        opencode = "command opencode --port";
         la = "ls -laF";
         gs = "git status";
         gc = "git commit";
         gp = "git push";
         gl = "git log";
+        e = "nvim";
       };
     };
 
