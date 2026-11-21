@@ -5,6 +5,7 @@
     enable = true;
     taps = [
       "anomalyco/tap"
+      "fluxcd/tap"
       "hashicorp/tap"
       "oven-sh/bun"
 
@@ -16,9 +17,11 @@
     ];
 
     brews = [
+      "age"
       "asdf"
       "awscli"
       "cowsay"
+      "fluxcd/tap/flux"
       "jundot/omlx/omlx"
       "k9s"
       "kubectl"
@@ -26,6 +29,7 @@
       "kustomize"
       "oven-sh/bun/bun"
       "pi-coding-agent"
+      "sops"
       "worktrunk"
     ];
 
