@@ -70,6 +70,13 @@
       rm -rf "$PI_DIR/extensions/pi-skill-toggle"
     fi
     cp -R ${../../common/pi/extensions/pi-skill-toggle} "$PI_DIR/extensions/pi-skill-toggle"
+    run ${pkgs.coreutils}/bin/install -m 644 ${../../common/pi/AGENTS.md} "$PI_DIR/AGENTS.md"
+    for src in ${../../common/pi/agents}/*.md; do
+      run ${pkgs.coreutils}/bin/install -D -m 644 "$src" "$PI_DIR/agents/''${src##*/}"
+    done
+    for src in ${../../common/pi/extensions/subagent}/*.ts; do
+      run ${pkgs.coreutils}/bin/install -D -m 644 "$src" "$PI_DIR/extensions/subagent/''${src##*/}"
+    done
     cp ${../../common/pi/settings.json} "$PI_DIR/settings.json"
     run ${pkgs.coreutils}/bin/install -m 644 ${../../common/pi/mcp.json} "$PI_DIR/mcp.json"
     cp ${../../common/pi/extensions/custom-statusline.ts} "$PI_DIR/extensions/custom-statusline.ts"
