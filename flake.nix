@@ -12,7 +12,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     herdr = {
-      url = "github:ogulcancelik/herdr/v0.7.3";
+      url = "github:herdrdev/herdr-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     luna = {
