@@ -25,4 +25,4 @@
 
 - Lead with the outcome. For changes, say what you verified and note any important checks you couldn't run.
 - Keep the response concise. Skip the file-by-file recap unless I ask for it.
-
+- Show the full file/folder path in responses, even on markdown. Don't hide them using `[file-name](file-path)`, always use `[file-path](file-path)`.
