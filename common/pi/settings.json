@@ -2,20 +2,22 @@
   "lastChangelogVersion": "0.85.1",
   "theme": "dark",
   "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-6.1-sol",
+  "defaultModel": "gpt-6.2-astra",
   "defaultThinkingLevel": "medium",
   "packages": [
     "npm:@upstash/context7-pi",
     "npm:@plannotator/pi-extension",
     "npm:pi-exa",
-    "npm:pi-compact-tools"
+    "npm:pi-compact-tools",
+    "npm:pi-chat-bubbles",
+    "npm:@narumitw/pi-usage",
+    "npm:pi-context-view"
   ],
   "hideThinkingBlock": true,
   "enabledModels": [
-    "openai-codex/gpt-5.6-sol",
-    "openai-codex/gpt-5.6-terra",
-    "openai-codex/gpt-5.6-luna",
-    "openai-codex/gpt-6.1-sol"
+    "openai-codex/gpt-6.2-astra",
+    "openai-codex/gpt-6.2-sol",
+    "openai-codex/gpt-6-luna"
   ],
   "collapseChangelog": true,
   "terminal": {
