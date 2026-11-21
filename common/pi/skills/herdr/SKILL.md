@@ -88,6 +88,10 @@ herdr agent list
 
 Creation responses expose the IDs to use next. `workspace create` returns `.result.workspace`, `.result.tab`, and `.result.root_pane`. `tab create` returns `.result.tab` and `.result.root_pane`. `pane split` returns the new pane as `.result.pane`.
 
+## Create worktrees
+
+When creating a Herdr worktree, set its worktree label to the branch name, preserving the full branch name (including any `/` separators). Check the installed CLI help for the label option rather than guessing its syntax.
+
 ## Start and coordinate an agent
 
 Default to a sibling pane in the current tab and the current working directory. Do not create a workspace, tab, worktree, or different cwd unless the user explicitly requests that topology or location.
