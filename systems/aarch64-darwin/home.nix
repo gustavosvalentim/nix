@@ -108,6 +108,11 @@
     force = true;
   };
 
+  home.file."ghostty-jellybeans-theme" = {
+    target = ".config/ghostty/themes/jellybeans";
+    source = ../../common/ghostty/themes/jellybeans;
+  };
+
   home.file."ghostty-luna-theme" = {
     target = ".config/ghostty/themes/luna";
     source = "${inputs.luna}/extras/ghostty/luna";
