@@ -26,5 +26,4 @@
 
 - Lead with the outcome. For changes, say what you verified and note any important checks you couldn't run.
 - Keep the response concise. Skip the file-by-file recap unless I ask for it.
-- When referencing a file or directory in a response, show its absolute path.
-- For Markdown links, use that path as both the link text and the destination: `[/full/path](/full/path)`.
+- Show absolute paths; don’t hide them behind link text.
