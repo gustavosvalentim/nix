@@ -92,11 +92,15 @@ Creation responses expose the IDs to use next. `workspace create` returns `.resu
 
 When creating a Herdr worktree, set its worktree label to the branch name, preserving the full branch name (including any `/` separators). Check the installed CLI help for the label option rather than guessing its syntax.
 
+Reuse the initial shell pane in the new worktree tab to start the requested agent. Do not split it and leave the initial pane empty. Resolve the initial pane ID from the creation response or by inspecting the new tab's panes.
+
 ## Start and coordinate an agent
 
-Default to a sibling pane in the current tab and the current working directory. Do not create a workspace, tab, worktree, or different cwd unless the user explicitly requests that topology or location.
+If you just created a worktree, tab, or workspace at the user's request, start the agent in its initial available shell pane. Skip the splitting steps below. Only create an additional pane if the initial pane is occupied or the user explicitly requests another pane.
 
-Honor a direction requested by the user. Otherwise inspect the caller pane:
+Otherwise, default to a sibling pane in the current tab and the current working directory. Do not create a workspace, tab, worktree, or different cwd unless the user explicitly requests that topology or location.
+
+When a split is needed, honor a direction requested by the user. Otherwise inspect the caller pane:
 
 ```bash
 herdr pane layout --pane "$HERDR_PANE_ID"
