@@ -7,6 +7,8 @@ disable-model-invocation: true
 
 Write a handoff document summarising the current conversation so a fresh agent can continue the work. Save to the temporary directory of the user's OS - not the current workspace.
 
+After saving, always include a Markdown link in the final response with the full absolute file path as both the visible link text and the destination: `[{full-path}]({full-path})`. Replace both placeholders with the actual absolute path (no `~` abbreviation). Do not use a bare URL, a `file://` URL, or a descriptive label that hides the path. For example: `[/tmp/handoff.md](/tmp/handoff.md)`.
+
 Include a "suggested skills" section in the document, which suggests skills that the agent should invoke.
 
 Do not duplicate content already captured in other artifacts (specs, plans, ADRs, issues, commits, diffs). Reference them by path or URL instead.
