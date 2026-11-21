@@ -7,6 +7,7 @@
 
 ## Git
 
+- Make sure the `main` checkout is up-to-date, if not, run `git fetch && git pull`.
 - Reuse the worktree for the task branch if one exists. Otherwise, create a task worktree rather than editing `main` or switching branches in the primary checkout.
 - Prefix branches with its type `feat/`, `fix/`, `chore/`, or `refactor/` (for example, `feat/categories`).
 - Commit only when asked. Use Conventional Commits for commit messages.
