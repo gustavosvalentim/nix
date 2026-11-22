@@ -22,6 +22,7 @@
 - If you are fixing a bug, use the RED-GREEN approach. Add a regression test that fails before fixing it.
 - Keep your changes scoped to the task, avoid the scope creep.
 - Prefer the simplest change that fully meets the current requirement. Avoid abstractions for hypothetical needs and checks for conditions already guaranteed at that point.
+- Avoid comments. The code should be self-explanatory.
 
 ## Output
 
