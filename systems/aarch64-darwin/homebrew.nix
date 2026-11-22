@@ -30,6 +30,7 @@
       "oven-sh/bun/bun"
       "pi-coding-agent"
       "sops"
+      "tea"
       "worktrunk"
     ];
 
