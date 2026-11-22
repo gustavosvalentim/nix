@@ -12,6 +12,7 @@
 - Prefix branches with its type `feat/`, `fix/`, `chore/`, or `refactor/` (for example, `feat/categories`).
 - Commit only when asked. Use Conventional Commits for commit messages.
 - Worktrees are stored in `~/.herdr/worktrees/{repo-name}/{branch-name}`
+- Rebase your changes onto the base branch before pushing. Make sure there are no conflicts.
 
 ## Workflow
 
