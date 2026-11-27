@@ -44,7 +44,7 @@
   # Copy Codex config and shared skills to avoid symlinks.
   home.activation.syncCodexConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     CODEX_DIR="$HOME/.codex"
-    SKILLS="gitting-gud stupid worktrunk domain-modeling grill-me grill-with-docs grilling handoff herdr"
+    SKILLS="gitting-gud stupid worktrunk domain-modeling grill-me grill-with-docs grilling handoff herdr bro"
     mkdir -p "$CODEX_DIR/skills"
 
     rm -f "$CODEX_DIR/config.toml"
@@ -62,7 +62,7 @@
   # other runtime state in ~/.pi remain unmanaged.
   home.activation.syncPiConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     PI_DIR="$HOME/.pi/agent"
-    SKILLS="gitting-gud stupid worktrunk grill-me grill-with-docs grilling handoff herdr domain-modeling"
+    SKILLS="gitting-gud stupid worktrunk grill-me grill-with-docs grilling handoff herdr domain-modeling bro"
     mkdir -p "$PI_DIR/extensions/load-env" "$PI_DIR/skills"
 
     if [ -e "$PI_DIR/extensions/pi-skill-toggle" ]; then
